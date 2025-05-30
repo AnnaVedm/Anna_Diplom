@@ -1,0 +1,108 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="750"
+			 Background="Transparent"
+			 x:CompileBindings="False"
+             x:Class="TyutyunnikovaAnna_Diplom.ClubNews">
+	<UserControl.Styles>
+		<Style Selector="ListBox">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Padding" Value="0"/>
+		</Style>
+
+		<Style Selector="ListBoxItem">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pressed /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(0.99)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="Border.Trans">
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+		<Style Selector="Border.Trans:pointerover">
+			<Setter Property="RenderTransform" Value="scale(1.02)"/>
+		</Style>
+
+		<!-- Полностью переопределяем стиль ListBoxItem -->
+		<Style Selector="ListBoxItem">
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="Margin" Value="0,10"/>
+			<Setter Property="MinHeight" Value="150"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Border Name="PART_Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            CornerRadius="0">
+						<ContentPresenter Name="PART_ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+					</Border>
+				</ControlTemplate>
+			</Setter>
+		</Style>
+
+		<!-- Гарантированно убираем hover и selection -->
+		<Style Selector="ListBoxItem:pointerover /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="ListBoxItem:selected /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+	</UserControl.Styles>
+	<ScrollViewer>
+		<StackPanel Margin="20" Spacing="15">
+			<!-- Заголовок новости -->
+			<Border CornerRadius="10" Background="#47A76A" Padding="15">
+				<StackPanel>
+					<TextBlock Text="{Binding CurrentNews.Title}"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               TextWrapping="Wrap"/>
+					<StackPanel Orientation="Horizontal" Spacing="10">
+						<TextBlock Text="{Binding CurrentNews.Date, StringFormat='{}{0:dd MMMM yyyy}'}"
+                                   FontSize="14"
+                                   Foreground="White"/>
+						<TextBlock Text="{Binding CurrentNews.Author, StringFormat='Автор: {0}'}"
+                                   FontSize="14"
+                                   Foreground="White"/>
+					</StackPanel>
+				</StackPanel>
+			</Border>
+
+			<!-- Фото новости -->
+			<Image Source="{Binding CurrentNews.NewsPhoto}"
+                   MaxHeight="400"
+                   Stretch="Uniform"
+                   HorizontalAlignment="Center"/>
+
+			<!-- Содержание новости -->
+			<Border CornerRadius="10" Background="#FFF" Padding="20" BoxShadow="5 5 15 0 #a5a5a5">
+				<TextBlock Text="{Binding CurrentNews.Content}"
+                           FontSize="20"
+						   Margin="10"
+                           TextWrapping="Wrap"/>
+			</Border>
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

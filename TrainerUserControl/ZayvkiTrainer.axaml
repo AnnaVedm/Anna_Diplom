@@ -1,0 +1,205 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:CompileBindings="False"
+             x:Class="TyutyunnikovaAnna_Diplom.ZayvkiTrainer">
+	<UserControl.Styles>
+		<Style Selector="ListBox">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Padding" Value="0"/>
+		</Style>
+
+		<Style Selector="ListBoxItem">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pressed /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(0.99)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="Border.Trans">
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+		<Style Selector="Border.Trans:pointerover">
+			<Setter Property="RenderTransform" Value="scale(1.02)"/>
+		</Style>
+
+		<!-- Полностью переопределяем стиль ListBoxItem -->
+		<Style Selector="ListBoxItem">
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="Margin" Value="0,10"/>
+			<Setter Property="MinHeight" Value="150"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Border Name="PART_Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            CornerRadius="0">
+						<ContentPresenter Name="PART_ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+					</Border>
+				</ControlTemplate>
+			</Setter>
+		</Style>
+
+		<!-- Гарантированно убираем hover и selection -->
+		<Style Selector="ListBoxItem:pointerover /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="ListBoxItem:selected /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+	</UserControl.Styles>
+
+
+	<Grid ShowGridLines="False">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="80"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="50"/>
+		</Grid.RowDefinitions>
+
+		<!-- Верхняя панель с поиском -->
+		<Border CornerRadius="50" BorderThickness="2" Background="White" BorderBrush="#47A76A" Grid.Row="0" Margin="10" Padding="10">
+			<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+
+				<TextBox Name="Search_Textbox" BorderThickness="0"
+						 KeyUp="Search_KeyUp"
+						 Watermark="Начните искать..."
+						 Width="490"
+						 Padding="15,5"/>
+
+				<ComboBox ItemsSource="{Binding Trainingtypes_spisok}"
+						  SelectionChanged="FilterType_SelectionChanged"
+						  Background="White"
+						  Foreground="rgba(0,0,0,0.3)"
+						  BorderBrush="rgba(0,0,0,0.3)"
+						  Width="150"
+						  BorderThickness="2"
+						  VerticalAlignment="Center"
+						  Height="50"
+						  CornerRadius="50"
+						  PlaceholderText="Фильтрация"
+						  Padding="15,0"/>
+				
+				<ComboBox Background="White"
+						  SelectionChanged="SortType_SelectionChanged"
+						  PlaceholderText="Сортировка"
+						  Foreground="rgba(0,0,0,0.3)"
+						  BorderBrush="rgba(0,0,0,0.3)"
+						  Height="50"
+						  VerticalAlignment="Center"
+						  Width="270"
+						  CornerRadius="50"
+						  Padding="15,0">
+					<ComboBoxItem Content="По дате тренировки(убывание)"/>
+					<ComboBoxItem Content="По дате тренировки(возрастание)"/>
+					<ComboBoxItem Content="Сортировка"/>
+				</ComboBox>
+			</StackPanel>
+		</Border>
+
+		<!-- Панель с сообщением, когда нет лошадей -->
+		<Border CornerRadius="25"
+				Background="White"
+				Grid.Row="1"
+				Padding="20"
+				BorderThickness="2"
+				BorderBrush="#47A76A"
+				IsVisible="False">
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
+				<TextBlock Text="У вас пока нет принятых заявок"
+						   FontSize="24"
+						   FontWeight="Bold"
+						   Foreground="#47A76A"
+						   HorizontalAlignment="Center"/>
+			</StackPanel>
+		</Border>
+
+		<!-- Список принятых заявок -->
+		<ListBox CornerRadius="25" ItemsSource="{Binding Breedertrainigs_spisok}" Background="White" Grid.Row="1" Margin="20" Padding="10">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Border CornerRadius="50"
+							BorderThickness="2"
+							BorderBrush="#47A76A"
+							Padding="20"
+							Background="White">
+
+						<Grid ShowGridLines="False">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+
+							<!-- Фото лошади -->
+							<Ellipse Width="120" Height="120" Grid.Column="0" VerticalAlignment="Center"
+									 Margin="0 0 10 0">
+								<Ellipse.Fill>
+									<ImageBrush Source="{Binding Horse.HorseImage}" Stretch="UniformToFill"/>
+								</Ellipse.Fill>
+							</Ellipse>
+
+							<!-- Информация о тренировке (смещена влево) -->
+
+							<Grid ShowGridLines="False" RowDefinitions="Auto, *" Grid.Column="1" Margin="10">
+								
+								<TextBlock Text="{Binding Breedertrainingtype.Trainingtype.Name}"
+										   FontWeight="ExtraBold"
+										   FontSize="20"
+										   Grid.Row="0"
+										   Foreground="#47A76A" TextWrapping="Wrap"/>
+								
+								<StackPanel Grid.Row="1" Margin="20,10,0,0" VerticalAlignment="Center">
+									
+									<TextBlock Text="{Binding Horse.HorseName, StringFormat=Лошадь: {0}}"/>
+
+									<StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+										<TextBlock Text="Порода: " FontSize="14"/>
+										<TextBlock Text="{Binding Horse.Breed}" FontSize="14"/>
+									</StackPanel>
+
+									<StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+										<TextBlock Text="Владелец: " FontSize="14"/>
+										<TextBlock Text="{Binding User.Fullname}" FontSize="14"/>
+									</StackPanel>
+									
+									<StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+										<TextBlock Text="Дата тренировки: " FontSize="14"/>
+										<TextBlock Text="{Binding Startdate}" FontSize="14"/>
+									</StackPanel>
+									
+								</StackPanel>
+							</Grid>
+							
+							<TextBlock Grid.Column="2" Text="Принятая заявка" Margin="20 10 20 10" VerticalAlignment="Center"
+									   HorizontalAlignment="Center"
+									   FontWeight="ExtraBold"
+									   FontSize="16"
+									   Foreground="#47A76A"/>
+						</Grid>
+					</Border>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</Grid>
+</UserControl>

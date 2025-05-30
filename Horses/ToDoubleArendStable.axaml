@@ -1,0 +1,66 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Width="450" Height="350"
+		SystemDecorations="None"
+		Background="Transparent"
+		x:CompileBindings="False"
+		CornerRadius="40"
+		WindowStartupLocation="CenterScreen"
+		CanResize="False"
+        x:Class="TyutyunnikovaAnna_Diplom.ToDoubleArendStable"
+        Title="ToDoubleArendStable">
+	<Border CornerRadius="30" Background="White" BorderBrush="#47A76A" BorderThickness="5">
+		<StackPanel Spacing="15" Orientation="Vertical" HorizontalAlignment="Center" Margin="20">
+			<!-- Заголовок и кнопка закрытия -->
+			<Grid HorizontalAlignment="Stretch" Margin="0 10 0 0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+
+				<TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Text="Продление аренды"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Foreground="rgba(0,0,0,0.8)"/>
+
+				<Button Grid.Column="1" Content="Х" Click="OnCancelButtonClick"
+                        CornerRadius="5" Foreground="White" Background="#47A76A"
+                        Width="30" Height="30" Margin="0" FontSize="14"/>
+			</Grid>
+
+			<!-- Информация о лошади -->
+			<TextBlock Text="{Binding _selectedHorse.HorseName}"
+                       FontSize="18" FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="#47A76A"/>
+
+			<TextBlock Name="PriceTextBlock"
+                       FontSize="16" HorizontalAlignment="Center"/>
+
+			<!-- Блок ошибки -->
+			<Border Background="#FFF5F5" CornerRadius="5"
+                    Height="40" VerticalAlignment="Center"
+                    IsVisible="{Binding #ErrorTextBlock.Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+				<TextBlock Name="ErrorTextBlock"
+                           Foreground="Red"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           TextAlignment="Center"
+                           FontWeight="SemiBold"
+                           Margin="10 0"/>
+			</Border>
+
+			<Button Content="Продлить аренду" Click="OnExtendButtonClick"
+                    Name="ExtendButton"
+                    Margin="0 20 0 10"
+                    Classes="submitBtn"
+                    HorizontalAlignment="Center"
+                    Width="200"
+                    Height="40"
+                    FontSize="16"/>
+		</StackPanel>
+	</Border>
+</Window>

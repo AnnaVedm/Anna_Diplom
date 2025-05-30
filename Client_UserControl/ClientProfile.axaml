@@ -1,0 +1,395 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="750"
+             x:CompileBindings="False"
+             x:Class="TyutyunnikovaAnna_Diplom.ClientProfile">
+	
+	<UserControl.Styles>
+		<Style Selector="ListBox">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Padding" Value="0"/>
+		</Style>
+
+		<Style Selector="ListBoxItem">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pressed /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(0.99)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="Border.Trans">
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+		<Style Selector="Border.Trans:pointerover">
+			<Setter Property="RenderTransform" Value="scale(1.02)"/>
+		</Style>
+
+		<!-- Полностью переопределяем стиль ListBoxItem -->
+		<Style Selector="ListBoxItem">
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="Margin" Value="0,10"/>
+			<Setter Property="MinHeight" Value="150"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Border Name="PART_Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            CornerRadius="0">
+						<ContentPresenter Name="PART_ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+					</Border>
+				</ControlTemplate>
+			</Setter>
+		</Style>
+
+		<!-- Гарантированно убираем hover и selection -->
+		<Style Selector="ListBoxItem:pointerover /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="ListBoxItem:selected /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+	</UserControl.Styles>
+	
+	<Grid ShowGridLines="False" Margin="20">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<!-- Левая колонка с аватаром -->
+		<StackPanel Grid.Column="0" Width="250" HorizontalAlignment="Center" Spacing="10">
+			<Ellipse Width="200" Height="200">
+				<Ellipse.Fill>
+					<ImageBrush Source="{Binding CurrentUserImage}" Stretch="UniformToFill"/>
+				</Ellipse.Fill>
+			</Ellipse>
+
+			<TextBlock Text="{Binding user.Login}"
+                       HorizontalAlignment="Center"
+                       FontSize="16"
+                       FontWeight="ExtraBold"
+                       Foreground="rgba(0,0,0,0.8)"
+                       TextAlignment="Center"/>
+
+			<Button Height="30"
+                    Content="Изменить фото"
+                    HorizontalAlignment="Center"
+                    Click="ChangePhotoButton_Click"
+                    Classes="submitBtn"
+                    Width="150"/>
+		</StackPanel>
+
+		<!-- Правая колонка с информацией -->
+		<ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Column="1">
+			<StackPanel Spacing="20">
+				<!--Информация пользователя-->
+				<Border Grid.Column="1"
+					Background="White"
+					CornerRadius="10"
+					BoxShadow="5 5 15 0 #a5a5a5"
+					Padding="20"
+					Margin="20 0 0 0">
+					<ScrollViewer VerticalScrollBarVisibility="Hidden">
+						<StackPanel Spacing="15">
+							<TextBlock Text="Информация о профиле"
+									   FontWeight="ExtraBold"
+									   FontSize="20"/>
+
+							<TextBox Watermark="Имя"
+									 Text="{Binding user.Name}"
+									 IsEnabled="False"/>
+
+							<TextBox Watermark="Фамилия"
+									 Text="{Binding user.Surname}"
+									 IsEnabled="False"
+									 Classes="profileField"/>
+
+							<TextBox Watermark="Почта"
+									 Text="{Binding user.Email}"
+									 IsEnabled="False"
+									 Classes="profileField"/>
+
+							<StackPanel Orientation="Horizontal" Spacing="5">
+								<TextBlock Text="Баланс кошелька: "/>
+								<TextBlock Text="{Binding user.Wallets[0].Summ}"/>
+								<TextBlock Text=" руб"/>
+							</StackPanel>
+
+							<!--Данные для берейтора-->
+							<StackPanel Spacing="15" IsVisible="{Binding IsBreeder}">
+
+								<TextBlock Text="Биография и заслуги"
+									   FontWeight="Bold" FontSize="16"/>
+								
+								<TextBox Watermark="Биография"
+										 Height="150"
+										 Name="biographyTextBox"
+										 TextWrapping="Wrap"
+										 Text="{Binding user.Biography, Mode=TwoWay}"
+										 IsEnabled="{Binding IsEditEnabled}"/>
+
+								<TextBox Watermark=""
+										 Name="zasluga1"
+										 Text="{Binding user.Zasluga1, Mode=TwoWay}"
+										 IsEnabled="{Binding IsEditEnabled}"/>
+
+								<TextBox Watermark=""
+										 Name="zasluga2"
+										 Text="{Binding user.Zasluga2, Mode=TwoWay}"
+										 IsEnabled="{Binding IsEditEnabled}"/>
+
+								<TextBox Watermark=""
+										 Name="zasluga3"
+										 Text="{Binding user.Zasluga3, Mode=TwoWay}"
+										 IsEnabled="{Binding IsEditEnabled}"/>
+
+								<TextBox Watermark=""
+										 Name="zasluga4"
+										 Text="{Binding user.Zasluga4, Mode=TwoWay}"
+										 IsEnabled="{Binding IsEditEnabled}"/>
+
+								<!--Кнопки редактирования-->
+								<StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+									<Button Content="Редактировать данные" Grid.Column="1"
+										IsVisible="{Binding !IsEditEnabled}"
+										Classes="submitBtn" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center"
+										Click="EditBreederDataButton_Click"/>
+
+									<Button Content="Применить" Grid.Column="1"
+											Classes="submitBtn" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center"
+											IsVisible="{Binding IsEditEnabled}"
+											Click="ApplyBreederDataButton_Click"/>
+								</StackPanel>
+
+								<TextBlock Text="Цены на услуги"
+									   FontWeight="Bold" FontSize="16"/>
+
+								<ListBox ItemsSource="{Binding user.BreederTrainingTypes}">
+									<ListBox.ItemTemplate>
+										<DataTemplate>
+											<Border CornerRadius="50" BorderThickness="2" Background="White" Margin="10" BorderBrush="#47A76A"
+													Padding="30">
+												<Grid ShowGridLines="False"
+													  RowDefinitions="Auto, *"
+													  ColumnDefinitions="*, Auto">
+													
+													<TextBlock Text="{Binding Trainingtype.Name}" Foreground="#47A76A" FontSize="15"
+															   FontWeight="Bold"
+															   Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" TextWrapping="Wrap"/>
+
+													<StackPanel Grid.Row="1" Grid.Column="0" Spacing="10" Margin="0 10 0 0">
+														<TextBlock Text="{Binding Trainingtype.Duration, StringFormat=Длительность: {0} мин.}"/>
+														<TextBlock Text="{Binding Costoverride, StringFormat=Стоимость: {0} руб.}"
+																   IsVisible="{Binding !IsEditTrainingEnabled}"/>
+
+														<!--Изменяем значение стоимости-->
+														<TextBlock Text="Новое значение стоимости" Margin="0 10 0 0"
+																   IsVisible="{Binding IsEditTrainingEnabled, Mode=TwoWay}"
+																   FontWeight="Bold" FontSize="14"/>
+														
+														<TextBox Text="{Binding Costoverride}"
+																 IsVisible="{Binding IsEditTrainingEnabled, Mode=TwoWay}"/>
+													</StackPanel>
+
+													<!--Кнопки редактирования стоимости-->
+													<StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+																Margin="10 0 10 0">
+														<Button Content="Редактировать" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+															 IsVisible="{Binding !IsEditTrainingEnabled, Mode=TwoWay}" Classes="submitBtn"
+																Click="EnableEditCostButton_Click"/>
+														
+														<Button Content="Применить" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+																 IsVisible="{Binding IsEditTrainingEnabled, Mode=TwoWay}" Classes="submitBtn"
+																Click="ApplyEditCostButton_Click"/>
+													</StackPanel>
+												</Grid>
+											</Border>
+										</DataTemplate>
+									</ListBox.ItemTemplate>
+								</ListBox>
+								
+							</StackPanel>
+
+							 <!--Блок смены пароля--> 
+							<StackPanel IsVisible="{Binding !IsGoogleAuthUser}" Spacing="10">
+								<Separator Margin="0 10 0 10"/>
+								<TextBlock Text="Смена пароля" FontWeight="Bold" FontSize="16"/>
+								<TextBox Text="{Binding CurrentPassword, Mode=TwoWay}"
+										 Watermark="Текущий пароль"
+										 PasswordChar="•"
+										 Classes="profileField"/>
+								<TextBox Text="{Binding NewPassword, Mode=TwoWay}"
+										 Watermark="Новый пароль"
+										 PasswordChar="•"
+										 Classes="profileField"/>
+								<TextBox Text="{Binding ConfirmPassword, Mode=TwoWay}"
+										 Watermark="Повторите пароль"
+										 PasswordChar="•"
+										 Classes="profileField"/>
+								<Button Content="Изменить пароль"
+										HorizontalAlignment="Center"
+										Click="ChangePasswordButton_Click"
+										Classes="submitBtn"
+										Width="150"/>
+							</StackPanel>
+
+							 <!--Блок для Google-пользователей--> 
+							<StackPanel IsVisible="{Binding IsGoogleAuthUser}" Spacing="15" Margin="0 20">
+								<Border Background="#F5F5F5" CornerRadius="8" Padding="10"
+										HorizontalAlignment="Center">
+									<Image Source="/Assets/HorsesNews.jpg"
+										   Width="300"
+										   MaxHeight="300"
+										   Stretch="Uniform"/>
+								</Border>
+								<StackPanel Spacing="5" HorizontalAlignment="Center">
+									<TextBlock Text="Вы используете Google-аутентификацию"
+											   FontSize="16"
+											   FontWeight="SemiBold"
+											   HorizontalAlignment="Center"/>
+									<TextBlock Text="Для смены пароля обратитесь в Google-аккаунт"
+											   TextAlignment="Center"
+											   FontSize="14"
+											   HorizontalAlignment="Center"
+											   Foreground="#666666"
+											   TextWrapping="Wrap"
+											   MaxWidth="300"/>
+								</StackPanel>
+							</StackPanel>
+						</StackPanel>
+					</ScrollViewer>
+				</Border>
+
+				<!--История заявок - видна только клиенту-->
+				<Border Grid.Column="1"
+						IsVisible="{Binding IsCurrentUserClient}"
+						Background="White"
+						CornerRadius="10"
+						BoxShadow="5 5 15 0 #a5a5a5"
+						Padding="20"
+						Margin="20 0 0 0">
+					<ScrollViewer VerticalScrollBarVisibility="Hidden">
+						<StackPanel Spacing="15">
+							<TextBlock Text="История заявок"
+									   FontWeight="ExtraBold"
+									   FontSize="20"/>
+
+							<ComboBox SelectionChanged="FilterStatus_SelectionChanged"
+									  Background="White"
+									  Foreground="rgba(0,0,0,0.3)"
+									  BorderBrush="rgba(0,0,0,0.3)"
+									  Width="150"
+									  Margin="0 0 20 0"
+									  BorderThickness="2"
+									  VerticalAlignment="Center"
+									  Height="50"
+									  CornerRadius="50"
+									  HorizontalAlignment="Right"
+									  PlaceholderText="Фильтрация"
+									  Padding="15,0">
+										<ComboBoxItem Content="Все заявки"/>
+										<ComboBoxItem Content="В процессе"/>
+										<ComboBoxItem Content="Не принята"/>
+										<ComboBoxItem Content="Отклонена"/>
+										<ComboBoxItem Content="Выполнена"/>
+										<ComboBoxItem Content="Принята"/>
+							</ComboBox>
+							
+							<TextBlock Text="История заявок пуста"
+									   IsVisible="{Binding !IsZayavkiExists}"
+									   FontWeight="Bold" Foreground="#47A76A"
+									   FontSize="20" HorizontalAlignment="Center" Margin="50"/>
+
+							<!--Список заявок-->
+							<ListBox ItemsSource="{Binding ZayavkiHistory_spisok}"
+									 IsVisible="{Binding IsZayavkiExists}">
+								<ListBox.ItemTemplate>
+									<DataTemplate>
+
+										<Border CornerRadius="50" BorderThickness="2" Background="White" Margin="10" BorderBrush="#47A76A" 
+												Padding="30">
+											<Grid ShowGridLines="False">
+												<Grid.RowDefinitions>
+													<RowDefinition Height="*"/>
+													<RowDefinition Height="Auto"/>
+												</Grid.RowDefinitions>
+												<Grid.ColumnDefinitions>
+													<ColumnDefinition Width="*"/>
+													<ColumnDefinition Width="Auto"/>
+												</Grid.ColumnDefinitions>
+
+												<!--Первая строка - название и статус заявки-->
+												<Grid Grid.Row="0" ShowGridLines="False" ColumnDefinitions="*, Auto" Margin="0 0 0 10">
+													<TextBlock Text="{Binding Breedertrainingtype.Trainingtype.Name}" FontWeight="Bold" TextWrapping="Wrap"
+															   FontSize="16" Foreground="#47A76A" Margin="10 5 10 5"/>
+
+													<StackPanel Orientation="Horizontal" Grid.Column="1"
+																Margin="10 5 20 5">
+														<TextBlock Text="Статус: " FontSize="15"/>
+														<TextBlock Text="{Binding RealTrainingStatus}" FontWeight="Bold"
+																   Foreground="{Binding StatusColor}"/>
+													</StackPanel>
+												</Grid>
+
+												<!--Вторая строка - данные и кнопка отмены-->
+												<Grid ShowGridLines="False" Grid.Row="1"
+													  ColumnDefinitions="*, Auto">
+													
+													<!--Бордер с инфой в первой колонке-->
+													<Border Background="White" 
+															BoxShadow="5 5 15 0 #a5a5a5"
+															CornerRadius="50"
+															Padding="20">
+														<StackPanel Orientation="Vertical" Spacing="5">
+															<!--Данные-->
+														
+															<TextBlock Text="{Binding Horse.HorseName, StringFormat=Лошадь: {0}}"
+																	   TextWrapping="Wrap"/>
+															<TextBlock Text="{Binding User.Fullname, StringFormat=Тренер: {0}}"
+																	   TextWrapping="Wrap"/>
+															<TextBlock Text="{Binding Cost, StringFormat=Стоимость: {0}}"
+																	   TextWrapping="Wrap"/>
+															<TextBlock Text="{Binding Startdate, StringFormat=Дата: {0:dd.MM.yyyy HH:mm}}"
+																	   TextWrapping="Wrap"/>
+														</StackPanel>
+													</Border>
+													
+													<!--Кнопка с отменов заявки-->
+													<Button Content="Отменить" Grid.Column="1" Background="Red"
+															IsVisible="{Binding IsCancelButtonVisible}"
+															Classes="submitBtn" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center"
+															Click="CancelZayavkaButton_Click"/>
+												</Grid>
+											</Grid>
+										</Border>
+									</DataTemplate>
+								</ListBox.ItemTemplate>
+							</ListBox>
+						</StackPanel>
+					</ScrollViewer>
+				</Border>
+
+			</StackPanel>
+		</ScrollViewer>
+	</Grid>
+</UserControl>

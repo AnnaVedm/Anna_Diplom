@@ -1,0 +1,89 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Width="405" Height="705"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="-1"
+        ExtendClientAreaToDecorationsHint="False"
+        SystemDecorations="None"
+        Background="Transparent"
+        x:CompileBindings="False"
+        CornerRadius="40"
+        WindowStartupLocation="CenterScreen"
+        CanResize="False"
+        x:Class="TyutyunnikovaAnna_Diplom.AddHorse"
+        Title="Добавление лошади">
+
+	<Border CornerRadius="30" Background="White" BorderBrush="{DynamicResource prColor}" BorderThickness="5">
+
+		<ScrollViewer VerticalScrollBarVisibility="Hidden">
+			<StackPanel Orientation="Vertical" Spacing="15">
+
+				<Panel HorizontalAlignment="Stretch">
+					<StackPanel HorizontalAlignment="Center">
+						<TextBlock Text="Добавить лошадь" FontSize="20" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)" Margin="0 20 0 0" HorizontalAlignment="Center"/>
+					</StackPanel>
+					<StackPanel HorizontalAlignment="Right">
+						<Button Content="X" CornerRadius="5" Foreground="White" Click="CloseWindow" Background="#47A76A" HorizontalAlignment="Right" Margin="0 15 20 0"/>
+					</StackPanel>
+				</Panel>
+
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+					<Rectangle Width="350" Height="2" Fill="rgba(0,0,0,0.3)"/>
+				</StackPanel>
+
+				<!-- Фото лошади -->
+				<Border Width="100" Height="100" CornerRadius="50" BorderBrush="#47A76A" BorderThickness="2"
+						HorizontalAlignment="Center" ClipToBounds="True">
+					<StackPanel>
+						<Image Name="HorseImage" Stretch="UniformToFill"/>
+						<Button Name="AddPhotoButton" Width="100" Height="100" CornerRadius="50"
+								Background="Transparent" Click="AddPhoto_Click"/>
+					</StackPanel>
+				</Border>
+
+				<!-- Основные поля -->
+				<TextBox Name="HorseNameTextBox" Width="350" Watermark="Имя лошади" FontSize="14" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)"/>
+				<TextBox Name="BreedTextBox" Width="350" Watermark="Порода" FontSize="14" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)"/>
+				<ComboBox Height="50" Name="GenderComboBox" HorizontalAlignment="Center" PlaceholderText="Выберите пол" Width="350" FontSize="14" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)"  ItemsSource="{Binding Genders}"
+				SelectedItem="{Binding SelectedGender}"/>
+				<TextBox Name="BirthdayTextBox" Width="350" Watermark="Дата рождения (дд.мм.гггг)" FontSize="14" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)"/>
+				<!-- Ветпаспорт -->
+				<CheckBox Name="VetPassportCheckBox" Content="Наличие ветеринарного паспорта"
+						  FontSize="14" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)"
+						  Margin="0,0,0,10" HorizontalAlignment="Center"/>
+				<!-- Кнопка выбора денника -->
+				<Button Name="SelectStableButton" Content="Выбрать денник" Click="SelectStable_Click" HorizontalAlignment="Center" Classes="submitBtn"/>
+
+				<!-- Информация о выбранном деннике -->
+				<Border Name="SelectedStableInfo" CornerRadius="5" BorderBrush="#47A76A" BorderThickness="1"
+						Padding="10" IsVisible="False" Width="350" HorizontalAlignment="Center">
+					<StackPanel>
+						<TextBlock Name="StableCodeText" FontWeight="Bold" FontSize="14" Foreground="rgba(0,0,0,0.8)"/>
+						<TextBlock Name="StableTypeText" FontSize="14" Foreground="rgba(0,0,0,0.8)"/>
+						<TextBlock Name="StablePriceText" Foreground="#47A76A" FontWeight="Bold" FontSize="14"/>
+					</StackPanel>
+				</Border>
+
+				<!-- Счет на оплату -->
+				<Border Name="PaymentInfo" CornerRadius="5" BorderBrush="#47A76A" BorderThickness="1"
+						Padding="10" IsVisible="False" Width="350" HorizontalAlignment="Center">
+					<StackPanel>
+						<TextBlock Text="Счет на оплату:" FontWeight="Bold" FontSize="14" Foreground="rgba(0,0,0,0.8)"/>
+						<TextBlock Name="PaymentAmountText" FontSize="16" Foreground="#47A76A" FontWeight="Bold"/>
+						<TextBlock Name="PaymentDescriptionText" TextWrapping="Wrap" FontSize="14" Foreground="rgba(0,0,0,0.8)"/>
+						<Button Name="PayButton" Content="Оплатить" Margin="0,10,0,0" Click="PayButton_Click" HorizontalAlignment="Center" Classes="submitBtn"/>
+						<TextBlock Name="PaymentStatusText" Margin="0,5,0,0" FontSize="14" Foreground="rgba(0,0,0,0.8)"/>
+					</StackPanel>
+				</Border>
+
+				<!-- Кнопка добавления -->
+				<Button Name="AddHorseButton" Content="Добавить лошадь" IsEnabled="False" Click="AddHorse_Click" HorizontalAlignment="Center" Classes="submitBtn"/>
+
+			</StackPanel>
+		</ScrollViewer>
+		
+	</Border>
+</Window>

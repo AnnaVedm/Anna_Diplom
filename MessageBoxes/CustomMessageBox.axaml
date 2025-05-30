@@ -1,0 +1,32 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+		Width="400" Height="200"
+		x:CompileBindings="False"
+		ExtendClientAreaChromeHints="NoChrome"
+		ExtendClientAreaTitleBarHeightHint="-1"
+		ExtendClientAreaToDecorationsHint="False"
+		SystemDecorations="None"
+		Background="Transparent"
+		WindowStartupLocation="CenterScreen"
+        x:Class="TyutyunnikovaAnna_Diplom.CustomMessageBox"
+        Title="CustomMessageBox">
+	<Border CornerRadius="20" Background="White" BorderBrush="{DynamicResource prColor}" BorderThickness="5">
+	<StackPanel Margin="20">
+		<TextBlock Name="MessageTextBlock" HorizontalAlignment="Center" 
+                   Margin="0 40 0 20" Foreground="#000000" TextWrapping="Wrap" TextAlignment="Center"
+		FontFamily="Arial"  
+		FontSize="14" /> 
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+			<Button Content="ОК" Width="80" Click="OKButton_Click"
+					Classes="submitBtn"
+			Margin="5" />
+			<Button Content="Отмена" Name="Otmena" Width="80" Click="OtmenaButton_Click"
+					Classes="submitBtn"
+			Margin="5" />
+		</StackPanel>
+	</StackPanel>
+	</Border>
+</Window>

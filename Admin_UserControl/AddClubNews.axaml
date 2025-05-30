@@ -1,0 +1,71 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Width="500" Height="630"
+        x:Class="TyutyunnikovaAnna_Diplom.AddClubNews"
+		SystemDecorations="None"
+		x:CompileBindings="False"
+		CornerRadius="40"
+		WindowStartupLocation="CenterScreen"
+		CanResize="False"
+		Background="Transparent"
+        Title="AddClubNews">
+	<Border CornerRadius="30" Background="White" BorderBrush="{DynamicResource prColor}" BorderThickness="5">
+		<Grid Margin="20" Width="400">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+
+			<!-- Заголовок и кнопка закрытия -->
+			<Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="0 10 0 0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+
+				<TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Text="Добавить новость"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Foreground="rgba(0,0,0,0.8)"/>
+
+				<Button Grid.Column="1" Content="Х"
+                        CornerRadius="5"
+                        Foreground="White"
+                        Background="#47A76A"
+                        Width="30" Height="30"
+                        Margin="0"
+                        Click="CloseButton_Click"
+                        FontSize="14"/>
+
+				<Rectangle Width="350" Height="2" Fill="rgba(0,0,0,0.3)"
+						   Margin="0 50 0 0"/>
+			</Grid>
+
+			<!-- ScrollViewer с прокручиваемым контентом -->
+			<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+				<StackPanel Spacing="15" Orientation="Vertical">
+
+					<TextBlock Text="Фотография:" Margin="0 10 0 0" FontWeight="Bold" FontSize="16"/>
+
+
+					<Image x:Name="NewsImage" HorizontalAlignment="Center"
+						   MaxWidth="200" MaxHeight="200"/>
+
+					<Button Content="Добавить фотографию" Classes="submitBtn"
+							Click="AddPhoto_Click"/>
+
+					<TextBox Watermark="Заголовок" FontSize="16" Name="newsNameTextBox" Height="40"/>
+					<TextBox Watermark="Описание" FontSize="16" Name="newsDescriptionTextBox"
+							 Height="150" TextWrapping="Wrap"/>
+
+					<Button Content="Добавить новость" Classes="submitBtn"
+							Margin="0 10 0 0" Padding="10 0 10 0" HorizontalAlignment="Center"
+							Click="AddNewsButton_Click"/>
+				</StackPanel>
+			</ScrollViewer>
+		</Grid>
+	</Border>
+</Window>

@@ -1,0 +1,244 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Width="1140" Height="730" ExtendClientAreaChromeHints="NoChrome"
+		ExtendClientAreaTitleBarHeightHint="-1"
+		ExtendClientAreaToDecorationsHint="False"
+		SystemDecorations="None"
+		Background="Transparent"
+		x:CompileBindings="False"
+		WindowStartupLocation="CenterScreen"
+		CanResize="False"
+        x:Class="TyutyunnikovaAnna_Diplom.Menu"
+        Title="Menu">
+	
+	<!--Width 1140 Height 730-->
+	<Window.Resources>
+
+		<LinearGradientBrush x:Key="ClientBackgroundColor">#e9e9e9</LinearGradientBrush>
+
+		<!--Градиент для nav-->
+		<LinearGradientBrush x:Key="ToggleBackground" StartPoint="0%,50%" EndPoint="100%, 50%">
+			<GradientStop Offset="0.9" Color="#f5f6f7"/>
+			<GradientStop Offset="1" Color="#d2d4d5"/>
+		</LinearGradientBrush>
+		
+		<PathGeometry x:Key="searchIcon">
+			M8.81947 8.82901L12 12M10.1667 5.58333C10.1667 8.11462 8.11462 10.1667 5.58333 10.1667C3.05203 10.1667 1 8.11462 1 5.58333C1 3.05203 3.05203 1 5.58333 1C8.11462 1 10.1667 3.05203 10.1667 5.58333Z
+		</PathGeometry>
+
+		<PathGeometry x:Key="messageIcon">
+			M4.66667 6.125H9.33334
+			M4.66667 8.16666H7.875
+			M9.91667 1.94705C9.05865 1.45072 8.06249 1.16666 7.00001 1.16666C3.77834 1.16666 1.16667 3.77833 1.16667 6.99999C1.16667 7.93315 1.38578 8.81509 1.77536 9.59728C1.87889 9.80512 1.91334 10.0427 1.85333 10.267L1.50589 11.5656C1.35506 12.1292 1.87076 12.6449 2.43446 12.4941L3.73298 12.1467C3.9573 12.0867 4.19488 12.1211 4.40273 12.2246C5.18489 12.6142 6.06685 12.8333 7.00001 12.8333C10.2216 12.8333 12.8333 10.2216 12.8333 6.99999C12.8333 5.93751 12.5493 4.94133 12.053 4.08332
+		</PathGeometry>
+
+		<PathGeometry x:Key="notificationIcon">
+			M11.0021 5.86655C11.0916 3.35628 9.18394 1.24496 6.73671 1.14584C4.28943 1.24496 2.38175 3.35628 2.47129 5.86655C2.47129 6.90918 1.36675 7.92488 1.33438 8.96988C1.33438 8.98469 1.33438 8.99941 1.33438 9.01422C1.31047 9.68373 1.81935 10.2468 2.47208 10.273H4.9359C4.93361 10.786 5.12218 11.2806 5.46307 11.656C5.7909 12.0211 6.25276 12.2289 6.73671 12.2289C7.22065 12.2289 7.68243 12.0211 8.01026 11.656C8.35122 11.2806 8.53976 10.786 8.53747 10.273H11.0021C11.6548 10.2468 12.1637 9.68373 12.1398 9.01422C12.1398 8.99941 12.1398 8.98469 12.1398 8.96988C12.1066 7.92805 11.0021 6.90997 11.0021 5.86655Z
+		</PathGeometry>
+	</Window.Resources>
+	<Window.Styles>
+		<Style Selector="Ellipse.pointer">
+			<Setter Property="Margin" Value="0,8,0,0"/>
+			<Setter Property="Transitions">
+				<Transitions>
+					<ThicknessTransition Property="Margin" Duration="0:0:0.5" Easing="QuarticEaseOut"/>
+				</Transitions>
+			</Setter>
+		</Style>
+
+			<!-- Стиль ТОЛЬКО для кнопки выхода -->
+			<Style Selector="Button#logoutButton">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="Button">
+							<!-- Просто ContentPresenter без всяких эффектов -->
+							<ContentPresenter
+								Content="{TemplateBinding Content}"
+								Background="Transparent"
+								BorderBrush="Transparent"
+								CornerRadius="0"
+								Padding="0"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"/>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+				<Setter Property="Cursor" Value="Hand"/>
+				<!-- Курсор "рука" при наведении -->
+			</Style>
+
+		<!--Изменим nav-->
+		<Style Selector="ToggleButton.nav2">
+			<Setter Property="CornerRadius" Value="10"/>
+			<Setter Property="Padding" Value="10"/>
+			<Setter Property="Foreground" Value="Black"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+			<Setter Property="FontSize" Value="12"/>
+			<Setter Property="Background" Value="White"/>
+
+			<Style Selector="^ /template/ ContentPresenter">
+				<Setter Property="Transitions">
+					<Transitions>
+						<BrushTransition Property="Foreground" Duration="0:0:0.5" Easing="QuarticEaseOut"/>
+					</Transitions>
+				</Setter>
+			</Style>
+
+			<Style Selector="^:pointerover /template/ ContentPresenter">
+				<Setter Property="BorderBrush" Value="#a5a5a5"/>
+				<Setter Property="BorderThickness" Value="0 0 0 1"/>
+			</Style>
+
+			<Style Selector="^:checked /template/ ContentPresenter#PART_ContentPresenter">
+				<Setter Property="IsEnabled" Value="false"/>
+				<Setter Property="BorderBrush" Value="Black"/>
+				<Setter Property="BorderThickness" Value="0 0 0 1"/>
+				<Setter Property="Foreground" Value="#47A76A"/>
+				<Setter Property="Background" Value="{StaticResource ToggleBackground}"/>
+			</Style>
+
+			<Style Selector="^:unchecked /template/ ContentPresenter#PART_ContentPresenter">
+				<Setter Property="Background" Value="White"/>
+			</Style>
+		</Style>
+
+		<Style Selector="ToggleButton.nav">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="Foreground" Value="rgba(255,255,255,0.8)"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+			<Setter Property="FontSize" Value="12"/>
+
+			<Style Selector="^ /template/ ContentPresenter">
+				<Setter Property="Transitions">
+					<Transitions>
+						<BrushTransition Property="Foreground" Duration="0:0:0.5" Easing="QuarticEaseOut"/>
+					</Transitions>
+				</Setter>
+			</Style>
+			<Style Selector="^:pointerover /template/ ContentPresenter">
+				<Setter Property="Foreground" Value="#dadcde"/>
+			</Style>
+			<Style Selector="^:unchecked /template/ ContentPresenter#PART_ContentPresenter">
+				<Setter Property="Background" Value="Transparent"/>
+			</Style>
+			<Style Selector="^:checked /template/ ContentPresenter#PART_ContentPresenter">
+				<Setter Property="IsEnabled" Value="false"/>
+				<Setter Property="Foreground" Value="#47A76A"/>
+				<Setter Property="Background" Value="Transparent"/>
+			</Style>
+		</Style>
+		<Style Selector="Button.message">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid>
+							<Grid.Styles>
+								<Style Selector="Path">
+									<Setter Property="Stroke" Value="rgba(255,255,255,0.8)"/>
+								</Style>
+							</Grid.Styles>
+							<Path Data="{StaticResource messageIcon}"
+								  StrokeThickness="1" Stretch="Uniform"
+								  Width="16" Height="16"/>
+							<Border CornerRadius="4" Width="14" Height="8" Background="#FF3B3B"
+									Margin="12 0 0 12">
+								<TextBlock Text="+8" Foreground="White" FontWeight="SemiBold"
+										   FontSize="6" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+							</Border>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Styles>
+	<Border BorderThickness="5" BorderBrush="#47A76A" Background="{StaticResource ClientBackgroundColor}" 
+			CornerRadius="30" >
+	<Grid ShowGridLines="False">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="8*"/>
+		</Grid.RowDefinitions>
+
+		<!--Верхняя панель-->
+		<Border CornerRadius="30 30 30 30" Grid.Row="0" Background="{StaticResource ToggleBackground}"
+				Margin="0 0 0 10" BorderBrush="#a5a5a5" BoxShadow="5 5 15 0 #a5a5a5">
+			
+			<Grid ColumnDefinitions="Auto,*,Auto">
+				<Grid Grid.Column="0" ColumnDefinitions="Auto,Auto" Margin="15">
+					<Grid Grid.Column="0" ColumnDefinitions="Auto,Auto" Margin="15">
+						<Image Source="/Assets/EspadaLogo2.png" Height="90" Width="130" Grid.Column="0" Margin="15 5 10 5"/>
+						<Image Source="/Assets/LogoHorse.png" Height="60" Width="90" Grid.Column="1" Margin="0 0 0 0"/>
+					</Grid>
+					<!--<TextBlock Grid.Column="1"  VerticalAlignment="Center" FontSize="25" FontWeight="SemiBold"
+							   Foreground="Black" Text="Espada"/>-->
+				</Grid>
+				<Grid Grid.Column="1" Margin="-20 0 0 0">
+					<StackPanel Orientation="Horizontal" Spacing="5" x:Name="navList">
+						<ToggleButton FontSize="20" Classes="nav2" Click="HomeToggleButton_Click" Content="На главную" Checked="ToggleButton_Checked"/>
+						<ToggleButton FontSize="20" Classes="nav2" Click="MyHorsesToggleButton_Click" Content="Мои лошади" Checked="ToggleButton_Checked"/>
+						<ToggleButton FontSize="20" Classes="nav2" Click="ClientProfileToggleButton_Click" Content="Мой профиль" Checked="ToggleButton_Checked"/>
+						<!--<ToggleButton FontSize="20" Classes="nav2" Content="Мой профиль" Checked="ToggleButton_Checked"/>-->
+					</StackPanel>
+					<!-- Блок кошелька с красивым бордером -->
+					<Border Grid.Column="1"
+							CornerRadius="15"
+							BorderBrush="#47A76A"
+							BorderThickness="1.5"
+							Background="White"
+							Margin="500 -5 0 0"
+							Padding="10 5"
+							VerticalAlignment="Center"
+							HorizontalAlignment="Left">
+						<StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+							<Image Source="/Assets/Wallet.png" Width="25" VerticalAlignment="Center"/>
+							<TextBlock Text="{Binding UserBalance}" VerticalAlignment="Center" FontSize="14"/>
+							<TextBlock Text="руб." VerticalAlignment="Center" FontSize="14"/>
+							<Button Background="#47A76A"
+									Foreground="White"
+									CornerRadius="50"
+									Click="UpdateWalletBalanceButton_Click"
+									FontWeight="Bold"
+									FontSize="14"
+									Content="+"/>
+						</StackPanel>
+					</Border>
+					<Button Grid.Column="2" x:Name="logoutButton" Margin="730 0 0 0" Click="ExitButton_Click" Background="Transparent" CornerRadius="50">
+						<Image Source="/Assets/logout.png" Width="100"/>
+					</Button>
+					<Grid Height="8" Margin="0 25 0 0">
+						<Ellipse Classes="pointer" IsVisible="True" x:Name="navPointer" HorizontalAlignment="Left"
+								 Width="6" Height="6" Fill="#47A76A"/>
+					</Grid>
+				</Grid>
+				<Grid ColumnDefinitions="Auto,Auto" Grid.Column="2" Margin="10">
+					<StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="15">
+						<!--<Button Classes="message"/>
+						<Button Classes="notification"/>-->
+					</StackPanel>
+					<Grid Grid.Column="1" ColumnDefinitions="Auto,Auto" Margin="20 0 0 0">
+						<Grid Grid.Column="0">
+						</Grid>
+						<Grid Grid.Column="1" Margin="10 0 0 0" RowDefinitions="*,*">
+							<!--<TextBlock Grid.Row="0" Text="Anna" FontWeight="Bold"
+									   Foreground="rgba(255,255,255,0.4)"
+									   FontSize="11" VerticalAlignment="Bottom" Margin="0 0 0 2"/>
+							<TextBlock Grid.Row="1" Text="@AnnaVedm" VerticalAlignment="Top"
+									   FontWeight="Bold" FontSize="10" Foreground="rgba(255,255,255,0.4)"/>-->
+						</Grid>
+					</Grid>
+				</Grid>
+			</Grid>
+		</Border>
+		
+		<!--Блок с usercontrol-->
+		<Border CornerRadius="0 0 30 30" Grid.Row="1" Background="{StaticResource ClientBackgroundColor}" ClipToBounds="True">
+			<Panel Grid.Row="1">
+				<ContentControl Name="Control"/>
+			</Panel>
+		</Border>
+
+	</Grid>
+	</Border>
+</Window>

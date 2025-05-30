@@ -1,0 +1,227 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="750"
+			 Background="Transparent"
+			 x:CompileBindings="False"
+             x:Class="TyutyunnikovaAnna_Diplom.MyHorses">
+	<UserControl.Styles>
+		<Style Selector="ListBox">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Padding" Value="0"/>
+		</Style>
+
+		<Style Selector="ListBoxItem">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pressed /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(0.99)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="Border.Trans">
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+		<Style Selector="Border.Trans:pointerover">
+			<Setter Property="RenderTransform" Value="scale(1.02)"/>
+		</Style>
+
+		<!-- Полностью переопределяем стиль ListBoxItem -->
+		<Style Selector="ListBoxItem">
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="Margin" Value="0,10"/>
+			<Setter Property="MinHeight" Value="150"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Border Name="PART_Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            CornerRadius="0">
+						<ContentPresenter Name="PART_ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+					</Border>
+				</ControlTemplate>
+			</Setter>
+		</Style>
+
+		<!-- Гарантированно убираем hover и selection -->
+		<Style Selector="ListBoxItem:pointerover /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="ListBoxItem:selected /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+	</UserControl.Styles>
+
+		<Grid ShowGridLines="False">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="80"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="50"/>
+			</Grid.RowDefinitions>
+
+			<!-- Верхняя панель с поиском -->
+			<Border CornerRadius="50" BorderThickness="2" Background="White" BorderBrush="#47A76A" Grid.Row="0" Margin="10" Padding="10">
+				<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+			
+						<TextBox Name="Search_Textbox" KeyUp="SearchTextBox_KeyUp" BorderThickness="0"
+								 Watermark="Начните искать лошадь..."
+								 Width="490"
+								 Padding="15,5"/>
+			
+					<ComboBox SelectionChanged="FilterComboBox_SelectionChanged" Background="White"
+							  Foreground="rgba(0,0,0,0.3)"
+							  BorderBrush="rgba(0,0,0,0.3)"
+							  Width="150"
+							  BorderThickness="2"
+							  VerticalAlignment="Center"
+							  Height="50"
+							  CornerRadius="50"
+							  PlaceholderText="Фильтрация"
+							  Padding="15,0">
+						<ComboBoxItem Content="Малый"/>
+						<ComboBoxItem Content="Средний"/>
+						<ComboBoxItem Content="Большой"/>
+						<ComboBoxItem Content="Фильтрация"/>
+					</ComboBox>
+					<ComboBox Background="White"
+							  PlaceholderText="Сортировка"
+							  Foreground="rgba(0,0,0,0.3)"
+							  BorderBrush="rgba(0,0,0,0.3)"
+							  Height="50"
+							  SelectionChanged="SortComboBox_SelectionChanged"
+							  VerticalAlignment="Center"
+							  Width="270"
+							  CornerRadius="50"
+							  Padding="15,0">
+						<ComboBoxItem Content="По дате окончания аренды(скоро)"/>
+						<ComboBoxItem Content="По дате окончания аренды(не скоро)"/>
+						<ComboBoxItem Content="Сортировка"/>
+					</ComboBox>
+					<Button Classes="submitBtn" Content="Добавить лошадь" Click="AddHorseButton_Click"/>
+				</StackPanel>
+			</Border>
+
+			<!-- Панель с сообщением, когда нет лошадей -->
+			<Border Name="NoHorsesPanel"
+					CornerRadius="25"
+					Background="White"
+					Grid.Row="1"
+					Padding="20"
+					BorderThickness="2"
+					BorderBrush="#47A76A"
+					IsVisible="False">
+				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
+					<TextBlock Text="У вас пока нет лошадей"
+							   FontSize="24"
+							   FontWeight="Bold"
+							   Foreground="#47A76A"
+							   HorizontalAlignment="Center"/>
+
+					<TextBlock Text="Чтобы арендовать денник, сначала добавьте лошадь"
+							   FontSize="16"
+							   HorizontalAlignment="Center"
+							   TextWrapping="Wrap"
+							   MaxWidth="400"
+							   TextAlignment="Center"/>
+
+					<Button Content="Добавить лошадь"
+							Classes="submitBtn"
+							HorizontalAlignment="Center"
+							Click="AddHorseButton_Click"/>
+				</StackPanel>
+			</Border>
+
+			<!-- Список лошадей -->
+			<ListBox CornerRadius="25" Name="HorsesListBox" ItemsSource="{Binding Horses_list}" Background="White" Grid.Row="1" Margin="20" Padding="10">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<Border CornerRadius="50"
+								BorderThickness="2"
+								BorderBrush="#47A76A"
+								Padding="20"
+								Background="White">
+
+							<Grid ShowGridLines="False">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto"/>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="Auto"/>
+								</Grid.ColumnDefinitions>
+
+								<!-- Фото лошади -->
+								<Ellipse Width="120" Height="120" Grid.Column="0" VerticalAlignment="Center">
+									<Ellipse.Fill>
+										<ImageBrush Source="{Binding HorseImage}" Stretch="UniformToFill"/>
+									</Ellipse.Fill>
+								</Ellipse>
+
+								<!-- Информация о лошади (смещена влево) -->
+								<StackPanel Grid.Column="1" Margin="20,0,0,0" VerticalAlignment="Center">
+									<TextBlock Text="{Binding HorseName}"
+											   FontWeight="ExtraBold"
+											   FontSize="20"
+											   Foreground="#47A76A"/>
+
+									<StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+										<TextBlock Text="Порода: " FontSize="14"/>
+										<TextBlock Text="{Binding Breed}" FontSize="14"/>
+									</StackPanel>
+
+									<StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+										<TextBlock Text="Пол: " FontSize="14"/>
+										<TextBlock Text="{Binding Gender}" FontSize="14"/>
+									</StackPanel>
+
+									<StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+										<TextBlock Text="Дата рождения: " FontSize="14"/>
+										<TextBlock Text="{Binding Datebirth, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="14"/>
+									</StackPanel>
+								</StackPanel>
+
+								<!-- Информация об аренде -->
+								<StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="20,0,0,0">
+									<TextBlock Text="Аренда" FontWeight="Bold" FontSize="16" Margin="0,0,0,5"/>
+
+									<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+										<TextBlock Text="Денник: " FontSize="14"/>
+										<TextBlock Text="{Binding HorseStables[0].Stable.Type.Name}" FontSize="14"/>
+										<TextBlock Text=" №" FontSize="14"/>
+										<TextBlock Text="{Binding HorseStables[0].Stable.StableCode}" FontSize="14"/>
+									</StackPanel>
+
+									<StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+										<TextBlock Text="Окончание: " FontSize="14"/>
+										<TextBlock Text="{Binding HorseStables[0].Assignmentdate}" FontSize="14"/>
+									</StackPanel>
+
+									<StackPanel Orientation="Horizontal" Spacing="5" Margin="0,10,0,0">
+										<Button Content="Продлить" Click="ToDoubleArendStable_ButtonClick" Classes="submitBtn" Padding="10,5" FontSize="12"/>
+										<Button Content="Сменить" Click="ChangeStableButton_Click" Classes="submitBtn" Padding="10,5" FontSize="12"/>
+										<Button Content="Удалить" Click="DeleteHorseButton_Click" Classes="submitBtn" Background="#FF5252" Padding="10,5" FontSize="12"/>
+									</StackPanel>
+								</StackPanel>
+							</Grid>
+						</Border>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+		</Grid>
+</UserControl>

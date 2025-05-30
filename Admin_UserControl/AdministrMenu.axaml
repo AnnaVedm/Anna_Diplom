@@ -1,0 +1,99 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1140" d:DesignHeight="730"
+			 x:CompileBindings="False"
+             x:Class="TyutyunnikovaAnna_Diplom.AdministrMenu">
+
+	<UserControl.Styles>
+		<Style Selector="Border.shadow-border">
+			<Setter Property="BoxShadow" Value="2 2 8 0 #88888855"/>
+		</Style>
+
+		<Style Selector="Border.Trans">
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+
+		<Style Selector="Border.Trans:pointerover">
+			<Setter Property="RenderTransform" Value="scale(1.02)"/>
+		</Style>
+	</UserControl.Styles>
+	
+	
+	<Grid Background="WhiteSmoke" ShowGridLines="False">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		
+		<TextBlock Text="Меню администратора" 
+				   FontWeight="ExtraBold"
+				   FontSize="20"
+				   Foreground="#47A76A"
+				   Grid.Row="0" Margin="60 20 0 10"/>
+		
+		<TextBlock Text="{Binding adminEmail}" Grid.Row="0" 
+				   HorizontalAlignment="Right" Margin="0 20 60 10"
+				   FontSize="16"/>
+
+			<Grid ShowGridLines="False" Grid.Row="1">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				
+				<!--Бордеры для вывода меню-->
+				<Border Padding="10" Classes="Trans" BoxShadow="5 5 15 0 #a5a5a5" Margin="20" CornerRadius="30" ClipToBounds="False" Grid.Column="0" Background="WhiteSmoke"
+						Width="500" HorizontalAlignment="Right"
+						PointerPressed="AdminNews_PointerPressed">
+					<Border ClipToBounds="True" CornerRadius="20">
+						<Panel HorizontalAlignment="Center" ClipToBounds="False" VerticalAlignment="Center" Background="Transparent" Grid.Column="0">
+							<Image HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="/Assets/News2.png" ></Image>
+							<TextBlock Text="Добавить новость" Foreground="White" VerticalAlignment="Bottom" FontStyle="Italic" FontWeight="ExtraBold" HorizontalAlignment="Left" Margin="20" FontSize="23"  />
+						</Panel>
+					</Border>
+				</Border>
+
+				<Border Padding="10" Classes="Trans" BoxShadow="5 5 15 0 #a5a5a5" Margin="20" CornerRadius="30" ClipToBounds="False" Background="WhiteSmoke"
+						Grid.Row="0" Grid.Column="1" 
+						Width="500" HorizontalAlignment="Left"
+						PointerPressed="StablesAdmin_PointerPressed">
+					<Border ClipToBounds="True" CornerRadius="20">
+						<Panel HorizontalAlignment="Center" ClipToBounds="False" VerticalAlignment="Center" Background="Transparent" Grid.Column="0">
+							<Image HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="/Assets/BigStable.jpg"></Image>
+							<TextBlock Text="Редактировать денники" Foreground="White" VerticalAlignment="Bottom" FontStyle="Italic" FontWeight="ExtraBold" HorizontalAlignment="Left" Margin="20" FontSize="23"  />
+						</Panel>
+					</Border>
+				</Border>
+
+				<Border Padding="10" Classes="Trans" BoxShadow="5 5 15 0 #a5a5a5" Margin="20" CornerRadius="30" ClipToBounds="False" Background="WhiteSmoke"
+						Grid.Row="1" Grid.Column="0"
+						Width="500" HorizontalAlignment="Right"
+						PointerPressed="BreederAdmin_PointerPressed">
+					<Border ClipToBounds="True" CornerRadius="20">
+						<Panel HorizontalAlignment="Center" ClipToBounds="False" VerticalAlignment="Center" Background="Transparent" Grid.Column="0">
+							<Image HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="/Assets/Trainer4.jpg"></Image>
+							<TextBlock Text="Добавить берейтора" Foreground="White" VerticalAlignment="Bottom" FontStyle="Italic" FontWeight="ExtraBold" HorizontalAlignment="Left" Margin="20" FontSize="23"  />
+						</Panel>
+					</Border>
+				</Border>
+
+				<Border Padding="10" Classes="Trans" BoxShadow="5 5 15 0 #a5a5a5" Margin="20" CornerRadius="30" ClipToBounds="False" Background="WhiteSmoke"
+						Grid.Row="1" Grid.Column="1"
+					    PointerPressed="Competitions_PointerPressed"
+						Width="500" HorizontalAlignment="Left">
+					<Border ClipToBounds="True" CornerRadius="20">
+						<Panel HorizontalAlignment="Center" ClipToBounds="False" VerticalAlignment="Center" Background="Transparent" Grid.Column="0">
+							<Image HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="/Assets/HorsesNews.jpg"></Image>
+							<TextBlock Text="Добавить соревнования" Foreground="White" VerticalAlignment="Bottom" FontStyle="Italic" FontWeight="ExtraBold" HorizontalAlignment="Left" Margin="20" FontSize="23"  />
+						</Panel>
+					</Border>
+				</Border>
+			</Grid>
+	</Grid>
+</UserControl>

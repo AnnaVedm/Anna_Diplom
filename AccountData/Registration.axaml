@@ -1,0 +1,43 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+		Width="405" Height="610"
+		ExtendClientAreaChromeHints="NoChrome"
+		ExtendClientAreaTitleBarHeightHint="-1"
+		ExtendClientAreaToDecorationsHint="False"
+		SystemDecorations="None"
+		Background="Transparent"
+		x:CompileBindings="False"
+		CornerRadius="40"
+		WindowStartupLocation="CenterScreen"
+		CanResize="False"
+        x:Class="TyutyunnikovaAnna_Diplom.Registration"
+        Title="Registration">
+	<Border CornerRadius="30" Background="White" BorderBrush="{DynamicResource prColor}" BorderThickness="5">
+	<StackPanel Orientation="Vertical" Spacing="15">
+		
+		<Panel HorizontalAlignment="Stretch">
+			<StackPanel HorizontalAlignment="Center">
+				<TextBlock Text="Регистрация" FontSize="20" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)" Margin="0 20 0 0" HorizontalAlignment="Center"/>
+			</StackPanel>
+			<StackPanel HorizontalAlignment="Right">
+				<Button Content="X" CornerRadius="5" Foreground="White" Click="ExitButton_Click" Background="#47A76A" HorizontalAlignment="Right" Margin="0 15 20 0"/>
+			</StackPanel>
+			
+		</Panel>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+		<Rectangle Width="350" Height="2" Fill="rgba(0,0,0,0.3)"/>
+		</StackPanel>
+		<TextBox Name="NameTextBox" Width="350" Watermark="Имя" FontSize="14" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)"/>
+		<TextBox Name="SurnameTextBox" Width="350" Watermark="Фамилия" FontSize="14" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)"/>
+		<TextBox Name="LoginTextBox" Width="350" Watermark="Логин" FontSize="14" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)"/>
+		<TextBox Name="EmailTextBox" Width="350" Watermark="Email" FontSize="14" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)"/>
+		<TextBox Name="PasswordTextBox" PasswordChar="*" Width="350" Watermark="Пароль" FontSize="14" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)"/>
+		<TextBox Name="DoublePasswordTextBox" PasswordChar="*" Width="350" Watermark="Повторите пароль" FontSize="14" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)"/>
+		<TextBlock Text="Необходимо придумать пароль более 8 знаков, используя цифры и буквы!" FontWeight="SemiBold" TextAlignment="Center" TextWrapping="Wrap" Foreground="rgba(0,0,0,0.8)"/>
+		<Button Content="Зарегистрироваться" Click="RegisterButton_Click" HorizontalAlignment="Center" Classes="submitBtn"/>
+	</StackPanel>
+	</Border>
+</Window>

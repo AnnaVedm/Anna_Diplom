@@ -1,0 +1,195 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:CompileBindings="False"
+             x:Class="TyutyunnikovaAnna_Diplom.EditCompetitions">
+	<UserControl.Styles>
+		<!-- Стили полностью идентичные MyHorses -->
+		<Style Selector="ListBox">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Padding" Value="0"/>
+		</Style>
+
+		<Style Selector="ListBoxItem">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pressed /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(0.99)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="Border.Trans">
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+		<Style Selector="Border.Trans:pointerover">
+			<Setter Property="RenderTransform" Value="scale(1.02)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem">
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="Margin" Value="0,10"/>
+			<Setter Property="MinHeight" Value="150"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Border Name="PART_Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            CornerRadius="0">
+						<ContentPresenter Name="PART_ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+					</Border>
+				</ControlTemplate>
+			</Setter>
+		</Style>
+
+		<Style Selector="ListBoxItem:pointerover /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="ListBoxItem:selected /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+	</UserControl.Styles>
+
+	<Grid ShowGridLines="False">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="80"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<!-- Верхняя панель с поиском (аналогичная MyHorses) -->
+		<Border CornerRadius="50" BorderThickness="2" Background="White" BorderBrush="#47A76A" Grid.Row="0" Margin="10" Padding="10">
+			<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+				<TextBox Name="Search_Textbox" BorderThickness="0"
+                         Watermark="Поиск соревнований..."
+                         Width="550"
+                         Padding="15,5"/>
+
+				<ComboBox Background="White"
+                          Foreground="rgba(0,0,0,0.3)"
+                          BorderBrush="rgba(0,0,0,0.3)"
+                          Width="150"
+						  
+                          BorderThickness="2"
+                          VerticalAlignment="Center"
+                          Height="50"
+                          CornerRadius="50"
+                          PlaceholderText="Фильтрация"
+                          Padding="15,0">
+					<ComboBoxItem Content="Грядущие"/>
+					<ComboBoxItem Content="Прошедшие"/>
+					<ComboBoxItem Content="Фильтрация"/>
+				</ComboBox>
+
+				<ComboBox Background="White"
+						  
+                          PlaceholderText="Сортировка"
+                          Foreground="rgba(0,0,0,0.3)"
+                          BorderBrush="rgba(0,0,0,0.3)"
+                          Height="50"
+                          VerticalAlignment="Center"
+                          Width="150"
+                          CornerRadius="50"
+                          Padding="15,0">
+					<ComboBoxItem Content="По дате (сначала ближайшие)"/>
+					<ComboBoxItem Content="По дате (сначала дальние)"/>
+					<ComboBoxItem Content="Сортировка"/>
+				</ComboBox>
+
+				<Button Content="Добавить соревнование" Classes="submitBtn"
+						Click="AddCompetitionButton_Click"/>
+			</StackPanel>
+		</Border>
+
+		<!-- Список соревнований -->
+		<ListBox CornerRadius="25" ItemsSource="{Binding Competition_spisok}" Background="White" Grid.Row="1" Margin="20" Padding="10">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Border CornerRadius="50"
+                            BorderThickness="2"
+                            BorderBrush="#47A76A"
+                            Padding="20"
+                            Background="White">
+						<Grid ShowGridLines="False">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+
+
+							<!-- Фото соревнования -->
+							<!-- Фото соревнования -->
+							<Border CornerRadius="45"
+									Width="200"
+									Height="200"
+									Grid.Column="0"
+									VerticalAlignment="Center"
+									ClipToBounds="True">
+								<Image Source="{Binding Photocompetition}"
+									   Stretch="UniformToFill"/>
+							</Border>
+
+							<!-- Основная информация -->
+							<StackPanel Grid.Column="1" Margin="20,0,0,0" VerticalAlignment="Center">
+								<TextBlock Text="{Binding Name}"
+                                           FontWeight="ExtraBold"
+                                           FontSize="20"
+                                           Foreground="#47A76A"/>
+
+								<StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+									<TextBlock Text="Тип: " FontSize="14"/>
+									<TextBlock Text="{Binding Competitiontype}" FontSize="14"/>
+								</StackPanel>
+
+								<StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+									<TextBlock Text="Дата: " FontSize="14"/>
+									<TextBlock Text="{Binding Date, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="14"/>
+								</StackPanel>
+
+								<StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+									<TextBlock Text="Маршрут: " FontSize="14"/>
+									<TextBlock Text="{Binding Route}" FontSize="14"/>
+								</StackPanel>
+							</StackPanel>
+
+							<!-- Дополнительная информация -->
+							<StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="20,0,0,0">
+								<TextBlock Text="Участие" FontWeight="Bold" FontSize="16" Margin="0,0,0,5"/>
+
+								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+									<TextBlock Text="Взнос: " FontSize="14"/>
+									<TextBlock Text="{Binding Entryfee}" FontSize="14"/>
+									<TextBlock Text=" рублей" FontSize="14"/>
+								</StackPanel>
+
+								<Button Content="Удалить" Classes="submitBtn"
+										Background="Red" Margin="0 20 0 0"
+										Click="DeleteCompetitionButton_Click"/>
+
+							</StackPanel>
+						</Grid>
+					</Border>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</Grid>
+</UserControl>

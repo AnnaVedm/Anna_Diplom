@@ -1,0 +1,154 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="750"
+			 x:CompileBindings="False"
+             x:Class="TyutyunnikovaAnna_Diplom.ClientMenu">
+
+	<UserControl.Styles>
+		<Style Selector="Border.Trans">
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+
+		<Style Selector="Border.Trans:pointerover">
+			<Setter Property="RenderTransform" Value="scale(1.02)"/>
+		</Style>
+	</UserControl.Styles>
+	
+	<Grid  Background="WhiteSmoke" ShowGridLines="False">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="1*"/>
+		</Grid.RowDefinitions>
+		
+		<Grid Background="WhiteSmoke" ShowGridLines="False" > <!--новости и профиль-->
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			
+			<Border Padding="10" PointerPressed="NewsBorder_PointerPressed" Classes="Trans" BoxShadow="5 5 15 0 #a5a5a5" Margin="20" CornerRadius="30" ClipToBounds="False" Grid.Column="0" Background="WhiteSmoke">
+				<Border ClipToBounds="True" CornerRadius="20">
+					<Panel HorizontalAlignment="Center" ClipToBounds="False" VerticalAlignment="Center" Background="Transparent" Grid.Column="0">
+						<Image HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="/Assets/News2.png"></Image>
+						<TextBlock Text="Новости" Foreground="White" VerticalAlignment="Bottom" FontStyle="Italic" FontWeight="ExtraBold" HorizontalAlignment="Left" Margin="10" FontSize="20"  />
+					</Panel>
+				</Border>
+			</Border>
+
+			<!--Второй столбец-->
+			<Border PointerPressed="ProfileBorder_PointerPressed" Padding="10" Grid.Column="1" Classes="Trans" BoxShadow="5 5 15 0 #a5a5a5" Margin="20" CornerRadius="30" ClipToBounds="False" Background="WhiteSmoke">
+
+				<Grid ShowGridLines="False">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="1.5*"/>
+					</Grid.ColumnDefinitions>
+
+					<StackPanel Spacing="10" Margin="0 40 0 0" Grid.Column="0">
+						<Ellipse Width="100" Height="100">
+							<Ellipse.Fill>
+								<ImageBrush Source="{Binding CurrentUserImage}" Stretch="UniformToFill"/>
+							</Ellipse.Fill>
+						</Ellipse>
+						<!--<Button Height="30" Content="Изменить фото" Click="ChangePhotoButton_Click" HorizontalAlignment="Center" Classes="submitBtn"/>-->
+
+						<TextBlock Text="{Binding user.Login}" FontSize="16" FontWeight="ExtraBold" Foreground="rgba(0,0,0,0.8)" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center"/>
+
+						<TextBlock Text="{Binding user.UserStatus}" HorizontalAlignment="Center"/>
+					</StackPanel>
+
+
+					<StackPanel Spacing="10" Grid.Column="1">
+						<TextBlock Text="Профиль" FontWeight="ExtraBold" FontSize="20"/>
+						<TextBox Watermark="Имя" Text="{Binding user.Name}" IsEnabled="False"/>
+						<TextBox Watermark="Фамилия" Text="{Binding user.Surname}" IsEnabled="False"/>
+						<TextBox Watermark="Почта" Text="{Binding user.Email}" IsEnabled="False"/>
+						<StackPanel Orientation="Horizontal">
+						</StackPanel>
+					</StackPanel>
+					
+				</Grid>
+				<!--<Border ClipToBounds="True" CornerRadius="20">-->
+					<!--<StackPanel HorizontalAlignment="Center" ClipToBounds="False" VerticalAlignment="Center" Background="Transparent" Grid.Column="0">
+						
+							<Border CornerRadius="200"  ClipToBounds="False" Background="WhiteSmoke" Grid.Column="0" BorderThickness="10" >
+								<Border ClipToBounds="True" CornerRadius="200">
+									<StackPanel>
+								<Image MaxHeight="100" MaxWidth="100" Source="/Assets/BigStable.jpg"/>
+									
+									</StackPanel>
+								</Border>
+							</Border>
+						<TextBlock Text="Фамилия имя отчество"/>
+							--><!--<Image Source="{Binding User_Image}"/>--><!--
+						
+						--><!--<Image HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="/Assets/HorsesNews.jpg">--><!--
+						</Image>--><!--
+					</StackPanel>-->
+
+					
+				</Border>
+			<!--</Border>-->
+			
+		</Grid>
+		<Grid ShowGridLines="False" Grid.Row="1"> <!--плитка-->
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			
+			<Border PointerPressed="StableInfoBorder_PointerPressed" Grid.Column="0" ClipToBounds="False" Margin="10" 
+					CornerRadius="30" BoxShadow="5 5 15 0 #a5a5a5"
+					Classes="Trans">
+				<StackPanel Margin="5">
+					<Border CornerRadius="30" ClipToBounds="True">
+						<Image MaxHeight="250" Source="/Assets/BigStable.jpg" Stretch="UniformToFill"/>
+					</Border>
+					<TextBlock Margin="0 10 0 0" Text="Информация о конюшне" TextAlignment="Center" FontSize="16" FontWeight="ExtraBold" TextWrapping="Wrap" Foreground="rgba(0,0,0,0.8)" />
+					<!--<Button Content="Перейти" Classes="submitBtn" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10"/>-->
+				</StackPanel>
+			</Border>
+
+			<Border PointerPressed="TrainerBorder_PointerPressed" Grid.Column="1" ClipToBounds="False" Margin="10"
+					CornerRadius="30" BoxShadow="5 5 15 0 #a5a5a5"
+					Classes="Trans">
+				<StackPanel Margin="5">
+					<Border CornerRadius="30" ClipToBounds="True">
+						<Image MaxHeight="250" Source="/Assets/Trainer4.jpg" Stretch="UniformToFill"/>
+					</Border>
+					<TextBlock Margin="0 10 0 0" Text="Услуги берейтора" TextAlignment="Center" FontSize="16" FontWeight="ExtraBold" TextWrapping="Wrap" Foreground="rgba(0,0,0,0.8)" />
+					<!--<Button Content="Перейти" Classes="submitBtn" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10"/>-->
+				</StackPanel>
+			</Border>
+			
+			<Border Grid.Column="2" ClipToBounds="False" Margin="10"
+					CornerRadius="30" BoxShadow="5 5 15 0 #a5a5a5"
+					Classes="Trans">
+				<StackPanel Margin="5">
+					<Border PointerPressed="Competition_PointerPressed" CornerRadius="30" ClipToBounds="True">
+						<Image MaxHeight="250" Source="/Assets/Horse2.jpg" Stretch="UniformToFill"/>
+					</Border>
+					<TextBlock Margin="0 10 0 0" Text="Cоревнования" TextAlignment="Center" FontSize="16" FontWeight="ExtraBold" TextWrapping="Wrap" Foreground="rgba(0,0,0,0.8)" />
+					<!--<Button Content="Перейти" Classes="submitBtn" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10"/>-->
+				</StackPanel>
+			</Border>
+
+			<Border PointerPressed="MyHorsesBorder_PointerPressed" Grid.Column="3" ClipToBounds="False" Margin="10"
+				CornerRadius="30" BoxShadow="5 5 15 0 #a5a5a5"
+				Classes="Trans">
+				<StackPanel Margin="5">
+					<Border CornerRadius="30" PointerPressed="MyHorsesBorder_PointerPressed" ClipToBounds="True">
+						<Image MaxHeight="250" Source="/Assets/Horse5.jpg" Stretch="UniformToFill"/>
+					</Border>
+					<TextBlock Margin="0 10 0 0" Text="Мои лошади" TextAlignment="Center" FontSize="16" FontWeight="ExtraBold" TextWrapping="Wrap" Foreground="rgba(0,0,0,0.8)" />
+					<!--<Button Content="Перейти" Classes="submitBtn" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10"/>-->
+				</StackPanel>
+			</Border>
+		</Grid>
+		
+	</Grid>
+</UserControl>

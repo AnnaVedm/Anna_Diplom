@@ -1,0 +1,205 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" Width="500" Height="630"
+		d:DesignHeight="2000"
+		ExtendClientAreaChromeHints="NoChrome"
+		ExtendClientAreaTitleBarHeightHint="-1"
+		ExtendClientAreaToDecorationsHint="False"
+		SystemDecorations="None"
+		Background="Transparent"
+		x:CompileBindings="False"
+		CornerRadius="40"
+		WindowStartupLocation="CenterScreen"
+		CanResize="False"
+        x:Class="TyutyunnikovaAnna_Diplom.AddBreeder"
+        Title="AddBreeder">
+
+	<Window.Styles>
+		<Style Selector="ListBox">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Padding" Value="0"/>
+		</Style>
+
+		<Style Selector="ListBoxItem">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pressed /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(0.99)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="Border.Trans">
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+		<Style Selector="Border.Trans:pointerover">
+			<Setter Property="RenderTransform" Value="scale(1.02)"/>
+		</Style>
+
+		<!-- Полностью переопределяем стиль ListBoxItem -->
+		<Style Selector="ListBoxItem">
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="Margin" Value="0,10"/>
+			<Setter Property="MinHeight" Value="150"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Border Name="PART_Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            CornerRadius="0">
+						<ContentPresenter Name="PART_ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+					</Border>
+				</ControlTemplate>
+			</Setter>
+		</Style>
+
+		<!-- Гарантированно убираем hover и selection -->
+		<Style Selector="ListBoxItem:pointerover /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="ListBoxItem:selected /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+	</Window.Styles>
+	
+	 <Border CornerRadius="30" Background="White" BorderBrush="{DynamicResource prColor}" BorderThickness="5">
+        <Grid Margin="20" Width="400">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Заголовок и кнопка закрытия -->
+            <Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="0 10 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Text="Добавить берейтора"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Foreground="rgba(0,0,0,0.8)"/>
+
+                <Button Grid.Column="1" Content="Х" 
+                        CornerRadius="5"
+                        Foreground="White"
+                        Background="#47A76A"
+                        Width="30" Height="30"
+                        Margin="0"
+                        Click="CloseButton_Click"
+                        FontSize="14"/>
+				
+				<Rectangle Width="350" Height="2" Fill="rgba(0,0,0,0.3)"
+						   Margin="0 50 0 0"/>
+            </Grid>
+
+            <!-- ScrollViewer с прокручиваемым контентом -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+                <StackPanel Spacing="15" Orientation="Vertical">
+
+                    <TextBlock Text="Основная информация" FontWeight="Bold" Margin="0 20 0 0" FontSize="16"/>
+
+					<TextBlock Text="Фотография:" Margin="0 10 0 0" FontWeight="Bold" />
+
+					<Border CornerRadius="75" ClipToBounds="True" MaxWidth="150" MaxHeight="150" Margin="0 10 0 0">
+						<Image x:Name="breedImage" Stretch="UniformToFill" HorizontalAlignment="Center"/>
+					</Border>
+
+					<Button Content="Добавить фотографию" Classes="submitBtn"
+							Click="AddPhoto_Click"/>
+					
+                    <TextBox Watermark="Login" FontSize="16" Name="loginTextBox" Height="40"/>
+                    <TextBox Watermark="Email" FontSize="16" Name="emailTextBox" Height="40"/>
+                    <TextBox Watermark="Имя" FontSize="16" Name="nameTextBox" Height="40"/>
+                    <TextBox Watermark="Фамилия" FontSize="16" Name="surnameTextBox" Height="40"/>
+					<TextBox Watermark="Биография" FontSize="16" Name="biographyTextBox" Height="100"
+							 TextWrapping="Wrap"/>
+                    <TextBox Watermark="Password" FontSize="16" Name="passwordTextBox" PasswordChar="*" Height="40"/>
+                    <TextBox Watermark="Repeat Password" FontSize="16" Name="repeatPasswordTextBox" PasswordChar="*" Height="40"/>
+
+                    <TextBlock Text="Заслуги" FontWeight="Bold" Margin="0 10 0 0" FontSize="16"/>
+                    <TextBox FontSize="16" Name="zasluga1" Height="40"/>
+                    <TextBox FontSize="16" Name="zasluga2" Height="40"/>
+                    <TextBox FontSize="16" Name="zasluga3" Height="40"/>
+                    <TextBox FontSize="16" Name="zasluga4" Height="40"/>
+
+					<TextBlock Text="Добавить тренировки" FontWeight="Bold" Margin="0 10 0 0" FontSize="16"/>
+
+					<ListBox MaxHeight="200" ItemsSource="{Binding Trainingtypes_spisok}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Border CornerRadius="50"
+										BorderThickness="2"
+										BorderBrush="#47A76A"
+										Padding="0"
+										Background="White">
+
+									<Grid ColumnDefinitions="*, Auto" Margin="30 0 20 0" VerticalAlignment="Center">
+										<StackPanel Grid.Column="0" Margin="0 0 0 0">
+											<TextBlock Text="{Binding Name}" TextWrapping="Wrap" FontWeight="Bold"/>
+											<TextBlock Text="{Binding Duration, StringFormat=Длительность(мин): {0}}" TextWrapping="Wrap" />
+											<TextBlock Text="{Binding Basecost, StringFormat=Стоимость: {0}}" TextWrapping="Wrap"/>
+										</StackPanel>
+
+										<Button Content="Добавить" Grid.Column="1" Classes="submitBtn"
+												Click="AddTrainingtypeButton_Click"/>
+									</Grid>
+								</Border>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+
+					<TextBlock Text="Тренировки берейтора" FontWeight="Bold" Margin="0 10 0 0" FontSize="16"/>
+
+					<ListBox MaxHeight="200" ItemsSource="{Binding selected_Types}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Border CornerRadius="50"
+										BorderThickness="2"
+										BorderBrush="#47A76A"
+										Padding="0"
+										Background="White">
+
+									<Grid ColumnDefinitions="*, Auto" Margin="30 0 20 0" VerticalAlignment="Center">
+										<StackPanel Grid.Column="0">
+											<TextBlock Text="{Binding Name}" TextWrapping="Wrap" FontWeight="Bold"/>
+											<TextBlock Text="{Binding Basecost, StringFormat=Стоимость: {0}}" TextWrapping="Wrap"/>
+											<TextBlock Text="{Binding Duration, StringFormat=Длительность(мин): {0}}" TextWrapping="Wrap" />
+										</StackPanel>
+										<Button Content="Удалить" Grid.Column="1"
+												Classes="submitBtn" Background="Red"
+												Click="RemoveTrainingtypeButton_Click"/>
+									</Grid>
+								</Border>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+
+                    <Button Content="Добавить" Margin="0 20 0 10" Classes="submitBtn"
+                            HorizontalAlignment="Center" Width="200" Height="40" FontSize="16"
+							Click="AddBreeder_ButtonClick"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</Window>

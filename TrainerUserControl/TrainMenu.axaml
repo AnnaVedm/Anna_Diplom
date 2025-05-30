@@ -1,0 +1,189 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="750"
+             x:CompileBindings="False"
+             x:Class="TyutyunnikovaAnna_Diplom.TrainMenu">
+	<UserControl.Styles>
+		<Style Selector="Border.Trans">
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+		<Style Selector="Border.Trans:pointerover">
+			<Setter Property="RenderTransform" Value="scale(1.02)"/>
+		</Style>
+	</UserControl.Styles>
+
+	<Grid Background="WhiteSmoke" ShowGridLines="False">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<!-- Верхняя часть с новостями и профилем (полностью сохранена) -->
+		<Grid Background="WhiteSmoke" ShowGridLines="False" Grid.Row="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Border Padding="10" PointerPressed="NewsBorder_PointerPressed" Classes="Trans" BoxShadow="5 5 15 0 #a5a5a5" Margin="20" CornerRadius="30" ClipToBounds="False" Grid.Column="0" Background="WhiteSmoke">
+				<Border ClipToBounds="True" CornerRadius="20">
+					<Panel HorizontalAlignment="Center" ClipToBounds="False" VerticalAlignment="Center" Background="Transparent" Grid.Column="0">
+						<Image HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" Source="/Assets/News2.png">
+						</Image>
+						<TextBlock Text="Новости" Foreground="White" VerticalAlignment="Bottom" FontStyle="Italic" FontWeight="ExtraBold" HorizontalAlignment="Left" Margin="10" FontSize="20"  />
+					</Panel>
+				</Border>
+			</Border>
+
+			<Border PointerPressed="ProfileBorder_PointerPressed" Padding="10" Grid.Column="1" Classes="Trans" BoxShadow="5 5 15 0 #a5a5a5" Margin="20" CornerRadius="30" ClipToBounds="False" Background="WhiteSmoke">
+				<Grid ShowGridLines="False">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="1.5*"/>
+					</Grid.ColumnDefinitions>
+
+					<StackPanel Spacing="10" Margin="0 40 0 0" Grid.Column="0">
+						<Ellipse Width="100" Height="100">
+							<Ellipse.Fill>
+								<ImageBrush Source="{Binding CurrentUserImage}" Stretch="UniformToFill"/>
+							</Ellipse.Fill>
+						</Ellipse>
+						
+						<TextBlock Text="{Binding user.Login}" FontSize="16" FontWeight="ExtraBold" Foreground="rgba(0,0,0,0.8)" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center"/>
+
+						<TextBlock Text="{Binding user.UserStatus}" HorizontalAlignment="Center"/>
+					</StackPanel>
+
+					<StackPanel Spacing="10" Grid.Column="1">
+						<TextBlock Text="Профиль" FontWeight="ExtraBold" FontSize="20"/>
+						<TextBox Watermark="Имя" Text="{Binding user.Name}" IsEnabled="False"/>
+						<TextBox Watermark="Фамилия" Text="{Binding user.Surname}" IsEnabled="False"/>
+						<TextBox Watermark="Почта" Text="{Binding user.Email}" IsEnabled="False"/>
+						<StackPanel Orientation="Horizontal">
+						</StackPanel>
+					</StackPanel>
+				</Grid>
+			</Border>
+		</Grid>
+
+		<!-- Заголовок "Заявки" -->
+		<TextBlock Grid.Row="1" Text="Заявки" FontSize="24" FontWeight="Bold" Margin="20 10" HorizontalAlignment="Left"/>
+
+		<!-- Панель для сообщения об отсутствии заявок -->
+		<Border Name="NoRequestsPanel"
+                Grid.Row="2"
+                CornerRadius="25"
+                Background="White"
+                BorderThickness="2"
+                BorderBrush="#47A76A"
+                Margin="20"
+                Padding="20"
+                IsVisible="{Binding !iszayvaexcist}">
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
+				<TextBlock Text="Новых заявок не обнаружено"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="#47A76A"
+                           HorizontalAlignment="Center"/>
+				<TextBlock Text="В данный момент нет новых заявок на тренировки"
+                           FontSize="16"
+                           HorizontalAlignment="Center"
+                           TextWrapping="Wrap"
+                           MaxWidth="400"
+                           TextAlignment="Center"/>
+			</StackPanel>
+		</Border>
+		
+		
+		<!-- Улучшенный ListBox с заявками -->
+		<ScrollViewer Grid.Row="2" Name="RequestsScrollViewer" VerticalScrollBarVisibility="Auto" IsVisible="{Binding iszayvaexcist}" HorizontalScrollBarVisibility="Disabled" Margin="10">
+			<ItemsControl ItemsSource="{Binding Zayavki_spisok}" Background="Transparent" BorderThickness="0">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20"/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Border Width="280" Height="400" Margin="15" CornerRadius="15"
+                                BoxShadow="3 3 10 0 #a5a5a5" Background="White"
+                                Classes="Trans">
+							<Grid Margin="10">
+								<Grid.RowDefinitions>
+									<RowDefinition Height="180"/>
+									<RowDefinition Height="Auto"/>
+									<RowDefinition Height="Auto"/>
+									<RowDefinition Height="Auto"/>
+									<RowDefinition Height="Auto"/>
+									<RowDefinition Height="Auto"/>
+									<RowDefinition Height="*"/>
+									<RowDefinition Height="Auto"/>
+								</Grid.RowDefinitions>
+
+								<!-- Изображение -->
+								<Border Grid.Row="0" CornerRadius="10" ClipToBounds="True">
+									<Image Source="{Binding Horse.HorseImage}" Stretch="UniformToFill"/>
+								</Border>
+
+								<!-- Наименование тренировки -->
+								<TextBlock Grid.Row="1" Text="{Binding Breedertrainingtype.Trainingtype.Name}"
+                                           Margin="0 10 0 0" FontSize="16" FontWeight="SemiBold"
+                                           TextWrapping="Wrap" TextAlignment="Center"/>
+
+								<!-- Лошадь и денник -->
+								<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5" Margin="0 5 0 0">
+									<TextBlock Text="{Binding Horse.HorseName}" FontSize="12" FontWeight="Medium"/>
+									<TextBlock Text="•" FontSize="12"/>
+									<TextBlock Text="{Binding Horse.HorseStables[0].Stable.StableCode, StringFormat=Денник {0}}"
+                                               FontSize="12"/>
+								</StackPanel>
+
+								<!-- Пользователь -->
+								<StackPanel Grid.Row="3" Margin="0 5 0 0" Orientation="Horizontal" HorizontalAlignment="Center">
+								<TextBlock Grid.Row="3"
+									   Text="Владелец: "
+									   FontSize="12" TextAlignment="Center"/>
+								<TextBlock Grid.Row="3"
+                                           Text="{Binding User.Name}"
+                                           FontSize="12" Margin="0 0 0 0" TextAlignment="Center"/>
+								</StackPanel>
+
+								<!-- Дата тренировки -->
+								<TextBlock Grid.Row="4"
+                                           Text="{Binding Startdate, StringFormat=Дата: {0:dd.MM.yyyy HH:mm}}"
+                                           FontSize="12" Margin="0 5 0 0" TextAlignment="Center"/>
+
+								<TextBlock Grid.Row="5"
+                                           Text="{Binding Cost, StringFormat=Стоимость(руб): {0}}"
+										   TextWrapping="Wrap"
+                                           FontSize="12" Margin="0 5 0 0" TextAlignment="Center"/>
+
+								<!-- Время тренировки --><!--
+								<TextBlock Grid.Row="5"
+                                           Text="{Binding Startdate, StringFormat=Время: {0:HH:mm}}"
+                                           FontSize="12" Margin="0 5 0 0" TextAlignment="Center"/>-->
+
+								<ScrollViewer Width="280" Grid.Row="6"> 
+								<TextBlock Grid.Row="6"
+					   Text="{Binding description}"
+					   FontSize="12" Margin="0 5 0 0" TextWrapping="Wrap" TextAlignment="Center"/>
+								</ScrollViewer>
+
+								<!-- Кнопки действий -->
+								<StackPanel Grid.Row="7" Orientation="Horizontal"
+                                            HorizontalAlignment="Center" Spacing="10" Margin="0 15 0 0">
+									<Button Content="Подтвердить" Click="SubmitButton_Click" Width="120" Height="30"
+                                            Classes="submitBtn" FontSize="12"/>
+									<Button Content="Отклонить" Click="RejectButton_Click"  Background="#FF5252" Width="120" Height="30"
+                                            Classes="submitBtn"  FontSize="12" />
+								</StackPanel>
+							</Grid>
+						</Border>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</ScrollViewer>
+	</Grid>
+</UserControl>

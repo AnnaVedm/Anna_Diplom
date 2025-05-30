@@ -1,0 +1,221 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="750"
+             x:CompileBindings="False"
+             Background="Transparent"
+             x:Class="TyutyunnikovaAnna_Diplom.TrainerServices">
+
+	<UserControl.Resources>
+		<!-- Иконки в виде Path -->
+		<StreamGeometry x:Key="EmailIcon">M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6ZM20 6L12 11L4 6H20ZM20 18H4V8L12 13L20 8V18Z</StreamGeometry>
+		<StreamGeometry x:Key="PhoneIcon">M20.01 15.38C18.78 15.38 17.59 15.18 16.48 14.82C16.13 14.7 15.74 14.79 15.47 15.06L13.9 17.03C11.07 15.68 8.42 13.13 7.01 10.2L8.96 8.54C9.23 8.26 9.31 7.87 9.2 7.52C8.82 6.4 8.62 5.22 8.62 3.99C8.62 3.45 8.17 3 7.62 3H4C3.45 3 3 3.45 3 4C3 13.39 10.61 21 20 21C20.55 21 21 20.55 21 20V16.38C21 15.83 20.55 15.38 20.01 15.38Z</StreamGeometry>
+		<StreamGeometry x:Key="AwardIcon">M17 3C18.1 3 19 3.9 19 5V8L22 9L19 10V12.5C19 13.9 18.2 15.1 17 15.7V21H15V15.7C13.8 15.1 13 13.9 13 12.5V10L10 9L13 8V5C13 3.9 13.9 3 15 3H17M17 5H15V8H17V5Z</StreamGeometry>
+		<StreamGeometry x:Key="InfoIcon">M11 9H13V7H11M12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2M11 17H13V11H11V17Z</StreamGeometry>
+	</UserControl.Resources>
+
+	<UserControl.Styles>
+		<!-- Гарантированно убираем hover и selection -->
+		<Style Selector="ListBoxItem:pointerover /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="ListBoxItem:selected /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+
+		<Style Selector="Border.shadow-border">
+			<Setter Property="BoxShadow" Value="2 2 8 0 #88888855"/>
+		</Style>
+		<Style Selector="Path.icon">
+			<Setter Property="Width" Value="16"/>
+			<Setter Property="Height" Value="16"/>
+			<Setter Property="Margin" Value="0 0 5 0"/>
+			<Setter Property="Fill" Value="#47A76A"/>
+			<Setter Property="Stretch" Value="Uniform"/>
+		</Style>
+	</UserControl.Styles>
+
+	<Grid ShowGridLines="False">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="80"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="50"/>
+		</Grid.RowDefinitions>
+
+		<!-- Верхняя панель с заголовком и поиском -->
+		<Border CornerRadius="50" BorderThickness="2" Background="White" BorderBrush="#47A76A" Grid.Row="0" Margin="10" Padding="10">
+			<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+				<TextBlock Text="Наши берейторы" FontWeight="ExtraBold" FontSize="20" Foreground="#47A76A"/>
+				<TextBox Watermark="Начните искать по имени..." KeyUp="SearchTextBox_KeyUp" BorderBrush="Transparent" Name="Search_textbox" Width="570" />
+			</StackPanel>
+		</Border>
+
+		<!-- Список берейторов -->
+		<ListBox CornerRadius="25" ItemsSource="{Binding Trainers_spisok}" Background="White" Grid.Row="1" Margin="20" Padding="10">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Border CornerRadius="50"
+                            BorderThickness="2"
+                            BorderBrush="#47A76A"
+                            Padding="20"
+                            Background="White"
+                            MinHeight="200"
+                            MinWidth="700"
+                            Margin="0 0 0 15">
+
+						<Grid ShowGridLines="False">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+
+							<!-- Левая колонка - фото и имя -->
+							<StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,20,0" Width="180">
+								<!-- Фото с декоративным бордером -->
+								<Border CornerRadius="100" Width="120" Height="100" BorderBrush="#47A76A" BorderThickness="2" Padding="2">
+									<Ellipse Width="150" Height="150">
+										<Ellipse.Fill>
+											<ImageBrush Source="{Binding User_Image}" Stretch="UniformToFill"/>
+										</Ellipse.Fill>
+									</Ellipse>
+								</Border>
+
+								<!-- Имя и фамилия -->
+								<StackPanel Margin="0 30 0 0">
+									<TextBlock Text="{Binding Name} {Binding Surname}"
+                                               FontWeight="ExtraBold"
+                                               FontSize="18"
+                                               TextAlignment="Center"
+                                               Foreground="#47A76A"/>
+
+									<!-- Рейтинг со звёздами -->
+									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="2" Margin="0 5 0 0">
+										<PathIcon Data="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"
+                                                  Foreground="#FFD700" Width="16" Height="16"/>
+										<TextBlock Text="4.8" FontSize="14" FontWeight="Bold" VerticalAlignment="Center"/>
+									</StackPanel>
+								</StackPanel>
+							</StackPanel>
+
+							<!-- Правая колонка - информация -->
+							<StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="10">
+								<!-- Блок с основной информацией -->
+								<Border CornerRadius="15"
+                                        Padding="15"
+                                        Background="#F8F8F8"
+                                        Classes="shadow-border">
+
+									<ScrollViewer MaxHeight="250" VerticalScrollBarVisibility="Auto">
+										<StackPanel Spacing="8">
+											<!-- Заголовок с иконкой -->
+											<StackPanel Orientation="Horizontal" Spacing="5">
+											
+												<TextBlock Text="О берейторе"
+                                                           FontWeight="Bold"
+                                                           FontSize="14"
+                                                           Foreground="#47A76A"/>
+											</StackPanel>
+
+											<TextBlock Text="{Binding Biography}"
+                                                       FontSize="12"
+                                                       TextWrapping="Wrap"
+                                                       Margin="0,0,0,5"/>
+
+											<!-- Заслуги с иконками -->
+											<StackPanel Spacing="5" Margin="10 0 0 0">
+												<StackPanel Orientation="Horizontal" Spacing="5">
+													<PathIcon Data="M9 16.17L5.53 12.7C5.14 12.31 4.51 12.31 4.12 12.7C3.73 13.09 3.73 13.72 4.12 14.11L8.3 18.29C8.69 18.68 9.32 18.68 9.71 18.29L19.29 8.71C19.68 8.32 19.68 7.69 19.29 7.3C18.9 6.91 18.27 6.91 17.88 7.3L9 16.17Z"
+                                                              Foreground="#47A76A" Width="12" Height="12"/>
+													<TextBlock Text="{Binding Zasluga1}"
+                                                               FontSize="12"
+                                                               TextWrapping="Wrap"/>
+												</StackPanel>
+
+												<StackPanel Orientation="Horizontal" Spacing="5">
+													<PathIcon Data="M9 16.17L5.53 12.7C5.14 12.31 4.51 12.31 4.12 12.7C3.73 13.09 3.73 13.72 4.12 14.11L8.3 18.29C8.69 18.68 9.32 18.68 9.71 18.29L19.29 8.71C19.68 8.32 19.68 7.69 19.29 7.3C18.9 6.91 18.27 6.91 17.88 7.3L9 16.17Z"
+                                                              Foreground="#47A76A" Width="12" Height="12"/>
+													<TextBlock Text="{Binding Zasluga2}"
+                                                               FontSize="12"
+                                                               TextWrapping="Wrap"/>
+												</StackPanel>
+
+												<StackPanel Orientation="Horizontal" Spacing="5">
+													<PathIcon Data="M9 16.17L5.53 12.7C5.14 12.31 4.51 12.31 4.12 12.7C3.73 13.09 3.73 13.72 4.12 14.11L8.3 18.29C8.69 18.68 9.32 18.68 9.71 18.29L19.29 8.71C19.68 8.32 19.68 7.69 19.29 7.3C18.9 6.91 18.27 6.91 17.88 7.3L9 16.17Z"
+                                                              Foreground="#47A76A" Width="12" Height="12"/>
+													<TextBlock Text="{Binding Zasluga3}"
+                                                               FontSize="12"
+                                                               TextWrapping="Wrap"/>
+												</StackPanel>
+
+												<StackPanel Orientation="Horizontal" Spacing="5">
+													<PathIcon Data="M9 16.17L5.53 12.7C5.14 12.31 4.51 12.31 4.12 12.7C3.73 13.09 3.73 13.72 4.12 14.11L8.3 18.29C8.69 18.68 9.32 18.68 9.71 18.29L19.29 8.71C19.68 8.32 19.68 7.69 19.29 7.3C18.9 6.91 18.27 6.91 17.88 7.3L9 16.17Z"
+                                                              Foreground="#47A76A" Width="12" Height="12"/>
+													<TextBlock Text="{Binding Zasluga4}"
+                                                               FontSize="12"
+                                                               TextWrapping="Wrap"/>
+												</StackPanel>
+											</StackPanel>
+										</StackPanel>
+									</ScrollViewer>
+								</Border>
+
+								<!-- Контактная информация -->
+								<StackPanel Spacing="5">
+									<TextBlock Text="Контакты:"
+                                               FontWeight="SemiBold"
+                                               FontSize="14"
+                                               Foreground="#47A76A"/>
+
+									<StackPanel Orientation="Horizontal" Spacing="5">
+										<TextBlock Text="{Binding Email}"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"/>
+									</StackPanel>
+
+									<StackPanel Orientation="Horizontal" Spacing="5">
+										<TextBlock Text="{Binding Phone}"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"/>
+									</StackPanel>
+								</StackPanel>
+
+								<!-- Услуги с иконкой -->
+								<StackPanel Spacing="5" Margin="0 5 0 0">
+									<StackPanel Orientation="Horizontal" Spacing="5">
+										<PathIcon Data="M19 13C19.34 13 19.67 13.04 20 13.09V8C20 6.9 19.1 6 18 6H12L10 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H13.81C13.3 19.12 13 18.1 13 17C13 14.79 14.79 13 17 13C17.34 13 17.67 13.04 18 13.09C18.33 13.04 18.66 13 19 13M17 15L14.5 18H16V22H18V18H19.5L17 15Z"
+                                                />
+										<TextBlock Text="Услуги:"
+                                                   FontWeight="SemiBold"
+                                                   FontSize="14"
+                                                   Foreground="#47A76A"/>
+									</StackPanel>
+									<StackPanel Orientation="Horizontal">
+									<ComboBox Width="250"
+											  
+											  SelectionChanged="ChooseTrainComboBox_SelectionChanged"
+                                              ItemsSource="{Binding BreederTrainingTypes}"
+                                              SelectedIndex="0"
+                                              FontSize="12"
+                                              PlaceholderText="Выберите услугу">
+										<ComboBox.ItemTemplate>
+											<DataTemplate>
+												<TextBlock Text="{Binding Trainingtype.Name}" FontSize="12"/>
+											</DataTemplate>
+										</ComboBox.ItemTemplate>
+									</ComboBox>
+									
+									<Button Content="Записаться" Click="ZapisButton_Click" Classes="submitBtn" Margin="10 0 0 0" IsVisible="True"/>
+									</StackPanel>
+								</StackPanel>
+							</StackPanel>
+						</Grid>
+					</Border>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</Grid>
+</UserControl>

@@ -1,0 +1,241 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="2500"
+			 Background="Transparent"
+			 x:CompileBindings="False"
+             x:Class="TyutyunnikovaAnna_Diplom.StableInfo">
+	<UserControl.Styles>
+		<Style Selector="ListBox">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Padding" Value="0"/>
+		</Style>
+
+		<Style Selector="ListBoxItem">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pressed /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(0.99)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="Border.Trans">
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+		<Style Selector="Border.Trans:pointerover">
+			<Setter Property="RenderTransform" Value="scale(1.02)"/>
+		</Style>
+
+		<!-- Полностью переопределяем стиль ListBoxItem -->
+		<Style Selector="ListBoxItem">
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="Margin" Value="0,10"/>
+			<Setter Property="MinHeight" Value="150"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Border Name="PART_Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            CornerRadius="0">
+						<ContentPresenter Name="PART_ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+					</Border>
+				</ControlTemplate>
+			</Setter>
+		</Style>
+
+		<!-- Гарантированно убираем hover и selection -->
+		<Style Selector="ListBoxItem:pointerover /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="ListBoxItem:selected /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+	</UserControl.Styles>
+	<ScrollViewer>
+		<StackPanel Margin="20" Spacing="20">
+			<!-- Заголовок -->
+			<Border CornerRadius="10" Background="#47A76A" Padding="20">
+				<TextBlock Text="Конный клуб «Espada»"
+                           FontSize="28"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           HorizontalAlignment="Center"/>
+			</Border>
+
+			<!-- Основной контент -->
+			<Border CornerRadius="10" Background="#FFF" Padding="20" BoxShadow="5 5 15 0 #a5a5a5">
+				<StackPanel Spacing="15">
+					<TextBlock Text="Премиальный уровень заботы о лошадях и всадниках"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               Foreground="#2C3E50"/>
+
+					<TextBlock Text="Конный клуб «Espada» – это современный, технологичный и комфортный центр для любителей конного спорта и профессиональных спортсменов. Здесь созданы все условия для гармоничного взаимодействия человека и лошади, а инновационные решения делают пребывание в клубе максимально удобным."
+                               TextWrapping="Wrap"
+                               FontSize="16"/>
+				</StackPanel>
+			</Border>
+
+			<!-- Премиальная инфраструктура -->
+			<Border CornerRadius="10" Background="#FFF" Padding="20" BoxShadow="5 5 15 0 #a5a5a5">
+				<StackPanel Spacing="15">
+					<TextBlock Text="Премиальная инфраструктура"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               Foreground="#2C3E50"/>
+
+					<TextBlock Text="«Espada» предлагает своим клиентам просторные денники различных категорий, отвечающие самым высоким стандартам содержания лошадей. В клубе предусмотрены как стандартные, так и увеличенные боксы, обеспечивающие комфорт даже для самых крупных и активных животных."
+                               TextWrapping="Wrap"
+                               FontSize="16"/>
+
+					<TextBlock Text="Манежи клуба – это огромные, оборудованные по последним требованиям площадки с качественным покрытием, позволяющим тренироваться в любую погоду. Открытые плацы и маршруты для выездки делают «Espada» идеальным местом для подготовки к соревнованиям."
+                               TextWrapping="Wrap"
+                               FontSize="16"/>
+				</StackPanel>
+			</Border>
+
+			<!-- Цифровые сервисы -->
+			<Border CornerRadius="10" Background="#FFF" Padding="20" BoxShadow="5 5 15 0 #a5a5a5">
+				<StackPanel Spacing="15">
+					<TextBlock Text="Цифровые сервисы для удобства клиентов"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               Foreground="#2C3E50"/>
+
+					<TextBlock Text="Одним из ключевых преимуществ клуба является его собственная цифровая платформа:"
+                               TextWrapping="Wrap"
+                               FontSize="16"/>
+
+					<ListBox>
+						<StackPanel Spacing="15" Orientation="Vertical">
+							<TextBlock Text="• Разместить лошадь на постой – быстро и без лишних хлопот"
+                                       FontSize="16"/>
+
+							<TextBlock Text="• Продлить срок постоя или сменить денник – в несколько кликов"
+                                       FontSize="16"/>
+							<TextBlock Text="• Заказать услуги берейтора – если требуется дополнительная работа с лошадью"
+                                       FontSize="16"/>
+							<TextBlock Text="• Записаться на соревнования – даже для гостей из других городов"
+                                       FontSize="16"/>
+						</StackPanel>
+					</ListBox>
+				</StackPanel>
+			</Border>
+			<!-- Блок для берейторов -->
+			<Border CornerRadius="10" Background="#FFF" Padding="20" BoxShadow="5 5 15 0 #a5a5a5" Margin="0,0,0,20">
+				<StackPanel Spacing="15">
+					<TextBlock Text="Карьера берейтора в Espada"
+							   FontSize="20"
+							   FontWeight="SemiBold"
+							   Foreground="#2C3E50"/>
+
+					<TextBlock Text="Конный клуб Espada создает идеальные условия для профессионального роста берейторов. Мы предлагаем не просто работу, а полноценную экосистему для развития вашего мастерства."
+							   TextWrapping="Wrap"
+							   FontSize="16"/>
+
+					<ListBox>
+						<StackPanel Spacing="15" Orientation="Vertical">
+							<TextBlock Text="• Современная цифровая платформа с автоматизированным учетом рабочего времени и выполненных задач"
+									   FontSize="16"/>
+							<TextBlock Text="• Прозрачная система оплаты с мгновенными переводами на карту или электронный кошелек"
+									   FontSize="16"/>
+							<TextBlock Text="• Гибкий график - вы сами формируете расписание и принимаете заказы через мобильное приложение"
+									   FontSize="16"/>
+							<TextBlock Text="• Доступ к премиальному оборудованию и инфраструктуре клуба для работы с лошадьми"
+									   FontSize="16"/>
+							<TextBlock Text="• Система рейтинга и отзывов, помогающая строить вашу профессиональную репутацию"
+									   FontSize="16"/>
+							<TextBlock Text="• Регулярные обучающие программы и мастер-классы от ведущих специалистов"
+									   FontSize="16"/>
+							<TextBlock Text="• Возможность участвовать в соревнованиях и показательных выступлениях"
+									   FontSize="16"/>
+						</StackPanel>
+					</ListBox>
+
+					<TextBlock Text="В Espada вы получаете:"
+							   FontSize="16"
+							   FontWeight="SemiBold"
+							   Foreground="#2C3E50"/>
+
+					<ListBox>
+						<StackPanel Spacing="10" Orientation="Vertical">
+							<TextBlock Text="✓ Стабильный поток клиентов благодаря репутации клуба"
+									   FontSize="16"/>
+							<TextBlock Text="✓ Техническую и административную поддержку по всем вопросам"
+									   FontSize="16"/>
+							<TextBlock Text="✓ Современные инструменты для анализа вашей продуктивности"
+									   FontSize="16"/>
+							<TextBlock Text="✓ Возможность профессионального роста внутри клубной системы"
+									   FontSize="16"/>
+						</StackPanel>
+					</ListBox>
+
+					<TextBlock Text="Присоединяйтесь к команде Espada и развивайте свою карьеру в условиях премиум-класса!"
+							   TextWrapping="Wrap"
+							   FontSize="16"
+							   FontWeight="SemiBold"
+							   Foreground="#47A76A"
+							   HorizontalAlignment="Center"/>
+				</StackPanel>
+			</Border>
+
+			<!-- Данные о расположении -->
+			<Border CornerRadius="10" Background="#FFF" Padding="20" BoxShadow="5 5 15 0 #a5a5a5" Margin="0 -10 0 0">
+				<StackPanel Spacing="15">
+					<TextBlock Text="Элитное расположение и транспортная доступность"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               Foreground="#2C3E50"/>
+
+					<TextBlock Text="Клуб «Espada» расположен в живописном и удобном для посещения месте. На карте вы можете ознакомиться с точным адресом и маршрутом, чтобы ваш путь к нам был максимально комфортным.Мы заботимся о каждом госте, чтобы ваше посещение Espada начиналось с легкости и вдохновения"
+                               TextWrapping="Wrap"
+                               FontSize="16"/>
+
+					<Border ClipToBounds="True" CornerRadius="20">
+						<Image Source="/Resources/espadaAddress.png"/>
+					</Border>
+
+					<TextBlock Text="Адрес: посёлок Парголово, улица Озерная, дом 5"
+                               TextWrapping="Wrap"
+                               FontSize="16"/>
+					
+				</StackPanel>
+			</Border>
+			
+			<!-- Заключение -->
+			<Border CornerRadius="10" Background="#47A76A" Padding="20">
+				<StackPanel Spacing="15">
+					<TextBlock Text="Конный клуб «Espada» – это пространство, где технологии встречаются с традициями, а внимание к деталям создает непревзойденный уровень сервиса. Здесь каждый – от начинающего всадника до профессионала – найдет все необходимое для достижения своих целей в конном спорте."
+                               TextWrapping="Wrap"
+                               FontSize="16"
+                               Foreground="White"/>
+
+					<TextBlock Text="Приходите в «Espada» и убедитесь, что забота о лошадях и комфорт клиентов могут быть на высшем уровне!"
+                               TextWrapping="Wrap"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Foreground="White"
+                               HorizontalAlignment="Center"/>
+				</StackPanel>
+			</Border>
+		</StackPanel>
+	</ScrollViewer>
+</UserControl>

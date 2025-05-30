@@ -1,0 +1,140 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+		Width="1140" Height="720"
+		ExtendClientAreaChromeHints="NoChrome"
+		ExtendClientAreaTitleBarHeightHint="-1"
+		ExtendClientAreaToDecorationsHint="False"
+		SystemDecorations="None"
+		Background="Transparent"
+		x:CompileBindings="False"
+		WindowStartupLocation="CenterScreen"
+		CanResize="False"
+        x:Class="TyutyunnikovaAnna_Diplom.MainWindow"
+        Title="TyutyunnikovaAnna_Diplom">
+	<Window.Styles>
+		<!-- Стиль ТОЛЬКО для кнопки выхода -->
+		<Style Selector="Button#logoutButton">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<!-- Просто ContentPresenter без всяких эффектов -->
+						<ContentPresenter
+							Content="{TemplateBinding Content}"
+							Background="Transparent"
+							BorderBrush="Transparent"
+							CornerRadius="0"
+							Padding="0"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"/>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="Cursor" Value="Hand"/>
+			<!-- Курсор "рука" при наведении -->
+		</Style>
+
+		<!-- Стиль ТОЛЬКО для кнопки регистрации -->
+		<Style Selector="Button#regButton">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<!-- Просто ContentPresenter без всяких эффектов -->
+						<ContentPresenter
+							Content="{TemplateBinding Content}"
+							Background="Transparent"
+							BorderBrush="Transparent"
+							CornerRadius="0"
+							Padding="0"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"/>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="Cursor" Value="Hand"/>
+			<!-- Курсор "рука" при наведении -->
+		</Style>
+
+		<!-- Стиль ТОЛЬКО для кнопки забыли пароль -->
+		<Style Selector="Button#forgetButton">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<!-- Просто ContentPresenter без всяких эффектов -->
+						<ContentPresenter
+							Content="{TemplateBinding Content}"
+							Background="Transparent"
+							BorderBrush="Transparent"
+							CornerRadius="0"
+							Padding="0"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"/>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="Cursor" Value="Hand"/>
+			<!-- Курсор "рука" при наведении -->
+		</Style>
+		
+	</Window.Styles>
+		<Border CornerRadius="50" Background="White">
+		<Grid ColumnDefinitions="Auto,*" Margin="20">
+			<Grid Grid.Column="0" Width="600">
+				<Border>
+					<Border.Clip>
+						<PathGeometry>
+							M0 25C0 11.1929 11.1929 0 25 0H570.822C586.157 0 597.878 13.6792 595.527 28.8328L497.784 658.833C495.894 671.014 485.407 680 473.08 680H25C11.1929 680 0 668.807 0 655V25Z
+						</PathGeometry>
+					</Border.Clip>
+					<Image Source="/Assets/HorseMain.jpg" Stretch="UniformToFill" Margin="0 0 -100 0"/>
+				</Border>
+				<Grid RowDefinitions="Auto,*,Auto">
+					<Grid Grid.Row="0" ColumnDefinitions="*,*" Margin="35">
+						<TextBlock Grid.Column="0" Text="AnnaVedm Development"
+								   FontSize="16" FontWeight="Bold" Foreground="rgba(255,255,255,0.9)"
+								   VerticalAlignment="Center"/>
+						<StackPanel Grid.Column="1" Spacing="15" HorizontalAlignment="Right" Orientation="Horizontal">
+						</StackPanel>
+					</Grid>
+				</Grid>
+			</Grid>
+			<Grid Grid.Column="1" Margin="100 20 100 0">
+				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Orientation="Vertical"
+							Spacing="20">
+					<TextBlock Text="Login" HorizontalAlignment="Center" FontSize="36" FontWeight="ExtraBold"
+							   Foreground="rgba(0,0,0,0.9)"/>
+					<TextBlock Text="Добро пожаловать в конный клуб Espada" HorizontalAlignment="Center"
+							   FontSize="14" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)"/>
+					<StackPanel Orientation="Vertical" Spacing="10">
+						<TextBox Watermark="Email" Name="EmailTextBox"/>
+						<TextBox Watermark="Password" PasswordChar="*" Name="PasswordTextBox"/>
+					</StackPanel>
+					<Button Content="Забыли пароль?" x:Name="forgetButton" Click="ForgetPasswordButton_Click"
+							Background="Transparent"
+							   HorizontalAlignment="Center"
+							   Foreground="{StaticResource prColor}"
+							   FontSize="12" FontWeight="Medium"/>
+					<StackPanel Orientation="Horizontal" Spacing="15" HorizontalAlignment="Center">
+						<Rectangle Width="50" Height="2" Fill="rgba(0,0,0,0.3)"/>
+						<TextBlock Text="or" FontWeight="SemiBold" FontSize="14" Foreground="rgba(0,0,0,0.8)"/>
+						<Rectangle Width="50" Height="2" Fill="rgba(0,0,0,0.3)"/>
+					</StackPanel>
+					<Button Click="GoogleButton_Click" Classes="googleBtn" HorizontalAlignment="Stretch"/>
+					<Button Click="LoginButton_Click" Cursor="Hand" Classes="submitBtn" Content="Login" HorizontalAlignment="Stretch"/>
+					<TextBlock HorizontalAlignment="Center" FontWeight="Medium">
+						<TextBlock Text="Нет аккаунта?" Margin="5"/>
+						<Button x:Name="regButton" Content="Зарегистрируйтесь" Click="RegistrationButton_Click" Foreground="{StaticResource prColor}" Background="Transparent" />
+						
+						<!--<Run Text="Don't have an account?" Foreground="rgba(0,0,0,0.8)"/>
+						<Run Text="Sign up" Foreground="{StaticResource prColor}"/>-->
+					</TextBlock>
+					<Button Click="ExitButton_Click" x:Name="logoutButton" HorizontalAlignment="Center" Width="80" Height="80" Margin="0 -20 0 0">
+						<Image Source="/Assets/logout.png" Width="95" Height="95"/>
+					</Button>
+				</StackPanel>
+			</Grid>
+		</Grid>
+	</Border>
+</Window>

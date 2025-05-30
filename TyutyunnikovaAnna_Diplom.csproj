@@ -1,0 +1,113 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Assets\BigStable.jpg" />
+    <None Remove="Assets\EspadaLogo2.png" />
+    <None Remove="Assets\fordesignhorse.png" />
+    <None Remove="Assets\horse.png" />
+    <None Remove="Assets\Horse2.jpg" />
+    <None Remove="Assets\Horse5.jpg" />
+    <None Remove="Assets\HorseMain.jpg" />
+    <None Remove="Assets\HorsesNews.jpg" />
+    <None Remove="Assets\logo.svg" />
+    <None Remove="Assets\LogoHorse.png" />
+    <None Remove="Assets\logout.png" />
+    <None Remove="Assets\News2.png" />
+    <None Remove="Assets\PlusBalance.png" />
+    <None Remove="Assets\tatu.png" />
+    <None Remove="Assets\Trainer4.jpg" />
+    <None Remove="Assets\Wallet.png" />
+    <None Remove="Resources\espadaAddress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\BigStable.jpg" />
+    <AvaloniaResource Include="Assets\EspadaLogo2.png" />
+    <AvaloniaResource Include="Assets\fordesignhorse.png" />
+    <AvaloniaResource Include="Assets\horse.png" />
+    <AvaloniaResource Include="Assets\Horse2.jpg" />
+    <AvaloniaResource Include="Assets\Horse5.jpg" />
+    <AvaloniaResource Include="Assets\HorseMain.jpg" />
+    <AvaloniaResource Include="Assets\HorsesNews.jpg" />
+    <AvaloniaResource Include="Assets\logo.svg" />
+    <AvaloniaResource Include="Assets\LogoHorse.png" />
+    <AvaloniaResource Include="Assets\logout.png" />
+    <AvaloniaResource Include="Assets\News2.png" />
+    <AvaloniaResource Include="Assets\PlusBalance.png" />
+    <AvaloniaResource Include="Assets\tatu.png" />
+    <AvaloniaResource Include="Assets\Trainer4.jpg" />
+    <AvaloniaResource Include="Assets\Wallet.png" />
+    <AvaloniaResource Include="Resources\espadaAddress.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Svg" Version="11.0.0" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.10" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.10" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.69.0" />
+    <PackageReference Include="Google.Apis.Oauth2.v2" Version="1.68.0.1869" />
+    <PackageReference Include="MailKit" Version="4.11.0" />
+    <PackageReference Include="MessageBox.Avalonia" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MimeKit" Version="4.11.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.0" />
+    <PackageReference Include="Qiwi.BillPayments" Version="0.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="AccountData\ForgetPassword.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Client_UserControl\TrainerServices.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Horses\SelectStable.axaml.cs">
+      <DependentUpon>SelectStable.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Horses\ToDoubleArendStable.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Client_UserControl\ClientProfile.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Client_UserControl\StableInfo.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Client_UserControl\Competitions.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Client_UserControl\ZapisNaTren.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="TrainerUserControl\ZayvkiTrainer.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Admin_UserControl\EditStables.axaml" />
+  </ItemGroup>
+</Project>

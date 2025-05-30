@@ -1,0 +1,133 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Width="600" Height="390"
+        Background="Transparent"
+        x:CompileBindings="False"
+		SystemDecorations="None"
+        CornerRadius="40"
+        WindowStartupLocation="CenterScreen"
+        CanResize="False"
+        Title="Выбор денника"
+        x:Class="TyutyunnikovaAnna_Diplom.SelectStable">
+
+	<Window.Styles>
+		<Style Selector="ListBox">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Padding" Value="0"/>
+		</Style>
+
+		<Style Selector="ListBoxItem">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(1.015)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pressed /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="RenderTransform" Value="scale(0.99)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		
+		<Style Selector="Border.Trans">
+			<Setter Property="RenderTransform" Value="scale(1)"/>
+		</Style>
+		<Style Selector="Border.Trans:pointerover">
+			<Setter Property="RenderTransform" Value="scale(1.02)"/>
+		</Style>
+
+		<Style Selector="ListBoxItem">
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="Margin" Value="0,10"/>
+			<Setter Property="MinHeight" Value="150"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Border Name="PART_Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            CornerRadius="0">
+						<ContentPresenter Name="PART_ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+					</Border>
+				</ControlTemplate>
+			</Setter>
+		</Style>
+
+		<Style Selector="ListBoxItem:pointerover /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="ListBoxItem:selected /template/ Border#PART_Border">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+	</Window.Styles>
+
+	<Border CornerRadius="30" Background="White" BorderBrush="{DynamicResource prColor}" BorderThickness="5">
+		<Grid Margin="10">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+
+			<Panel HorizontalAlignment="Stretch">
+				<StackPanel HorizontalAlignment="Center">
+					<TextBlock Text="Выберите денник" FontSize="20" FontWeight="SemiBold" Foreground="rgba(0,0,0,0.8)" Margin="0 20 0 0" HorizontalAlignment="Center"/>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<Rectangle Width="450" Height="2" Fill="rgba(0,0,0,0.3)"/>
+					</StackPanel>
+				</StackPanel>
+				<StackPanel HorizontalAlignment="Right">
+					<Button Content="X"  Click="CancelButton_Click" CornerRadius="5" Foreground="White" Background="#47A76A" HorizontalAlignment="Right" Margin="0 15 20 0"/>
+				</StackPanel>
+			</Panel>
+
+			
+
+			<ListBox Height="250" ScrollViewer.VerticalScrollBarVisibility="Disabled" Name="StablesListBox" 
+					 ItemsSource="{Binding Stabletype_spisok}" Grid.Row="1" Background="Transparent"
+					 >
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<UniformGrid Columns="3"/>
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<Border ToolTip.Tip="{Binding Description}" Classes="Trans" BorderBrush="#47A76A" BorderThickness="1" CornerRadius="30" Margin="10" BoxShadow="5 5 15 0 #a5a5a5" Height="210"
+								DoubleTapped="SelectStable_DoubleTapped" Background="Transparent">
+							<StackPanel Orientation="Vertical" Margin="10" Spacing="5">
+								<Border CornerRadius="20" ClipToBounds="True" Width="100">
+									<Image Source="{Binding Photo}" Stretch="UniformToFill"/>
+								</Border>
+								<TextBlock Text="{Binding Name}" FontWeight="Bold" TextAlignment="Center"/>
+								<TextBlock Text="{Binding Cost, StringFormat='Цена: {0} руб./мес'}" Foreground="#47A76A" FontWeight="SemiBold"
+                                           TextWrapping="Wrap" TextAlignment="Center"/>
+								<TextBlock HorizontalAlignment="Center" Text="{Binding StablesArendable, StringFormat='Свободно: {0}'}" TextWrapping="Wrap" />
+							</StackPanel>
+						</Border>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+
+			<StackPanel  Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10" Margin="0 10 0 0">
+				<TextBlock Width="400"  Text="Чтобы выбрать денник два раза нажмите на нужный или наведите курсор мыши, чтобы увидеть описание денника." TextWrapping="Wrap" TextAlignment="Center"/>
+			</StackPanel>
+		</Grid>
+	</Border>
+</Window>
