@@ -63,9 +63,6 @@ C#,.Net, Avalonia UI, API
 ### Предложения тренерства для лошадей с системой оценок(2 бизнес-процесс)
 ![image](https://github.com/user-attachments/assets/831db6bc-17e5-4e15-8fab-74f3cdd432e4)
 
-### Личный кабинет пользователя
-![image](https://github.com/user-attachments/assets/1dacb4ac-5f55-4391-98b3-358fa2d312c1)
-
 
 
 
