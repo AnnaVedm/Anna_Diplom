@@ -46,19 +46,15 @@ C#,.Net, Avalonia UI, API
 ВНИМАНИЕ! в тестировании кошелька используются мок данные для упрощения процесса тестирования.
 
 ### Контекстная диаграмма
-![image](https://github.com/user-attachments/assets/a76a36a3-f890-4a2c-8739-b25b8f6fc007)
+![image](https://github.com/user-attachments/assets/0477ec20-bdb0-46f3-a847-3faa553603df)
 
 ### Окно авторизации и регистрации. Авторизация через гугл, API(json), Avalonia
-![image](https://github.com/user-attachments/assets/8b7dbf3c-754a-46e7-bf2e-c34bd37d0d2b)
+![image](https://github.com/user-attachments/assets/5a067edf-a640-4ea3-9818-d585fe54b232)
+
 
 ### Главная страница с синхронизированным меню(через остановку рекурсии)
-![image](https://github.com/user-attachments/assets/f8ddfb00-856d-4f88-a32d-5ad8280e8568)
+![image](https://github.com/user-attachments/assets/1c839da8-153a-4097-b9ee-6c6552bf65e1)
 
-### Анимация плавающей точки в меню и окно для постановку лошадей на постой(1 бизнес-процесс)
-![image](https://github.com/user-attachments/assets/cc3066d1-1f86-447c-8db8-021722dc057d)
-
-### Предложения тренерства для лошадей с системой оценок(2 бизнес-процесс)
-![image](https://github.com/user-attachments/assets/831db6bc-17e5-4e15-8fab-74f3cdd432e4)
 
 
 
