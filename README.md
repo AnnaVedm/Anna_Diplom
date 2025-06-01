@@ -48,9 +48,6 @@ C#,.Net, Avalonia UI, API
 ### Контекстная диаграмма
 ![image](https://github.com/user-attachments/assets/a76a36a3-f890-4a2c-8739-b25b8f6fc007)
 
-### Структура базы данных
-![image](https://github.com/user-attachments/assets/c7159c38-3f9b-408c-9074-9c42f8a5fa13)
-
 ### Окно авторизации и регистрации. Авторизация через гугл, API(json), Avalonia
 ![image](https://github.com/user-attachments/assets/8b7dbf3c-754a-46e7-bf2e-c34bd37d0d2b)
 
